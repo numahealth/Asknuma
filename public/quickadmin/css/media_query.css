@@ -1,0 +1,135 @@
+
+/* Allow expanded search for above 768px */
+@media (min-width: 768px) {
+    /* 768px */
+ 
+}
+
+
+/* Form medium devices upto large devices */
+@media (min-width: 992px) and (max-width: 1200px) {
+ 
+}
+
+@media (min-width: 992px) {
+  
+  
+  
+}
+
+@media all and  (max-width: 991px) {
+  
+
+  table.datatable tr, table.datatable tr td { display:block;}
+   table.datatable tr { margin-bottom:35px;}
+  .no-more-tables thead tr {
+	display:none;
+}
+#no-more-tables tr {
+	border: 1px solid #ccc;
+}
+.no-more-tables td {
+	/* Behave like a "row" */
+	border: none;
+	border-bottom: 1px solid #eee;
+	position: relative; min-height:35px;
+	padding-left:28%!important;
+	white-space: normal;
+	text-align: left;
+}
+.no-more-tables td:before {
+	/* Now like a table header */
+	position: absolute;
+	/* Top/left values mimic padding */
+	top: 10px;
+	left: 6px;
+	width: 45%;
+	padding-right: 10px;
+	white-space: nowrap;
+	text-align: left;
+	font-weight: bold;
+}
+/*
+Label the data
+*/
+.no-more-tables td:before {
+	content: attr(data-title);
+}
+
+#datatables { width:100%!important;}  
+}
+
+
+@media all and  (max-width: 767px) {
+
+.navbar-header {float: left; width: auto;}
+
+
+
+
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+@media all and ( max-width: 480px) {
+.no-more-tables td {
+padding-left:50%!important;	
+	}	
+	
+	
+	
+	
+	
+	
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

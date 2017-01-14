@@ -1,0 +1,178 @@
+@media all and (max-width:1199px){
+
+	.collapse.navbar-collapse {margin-bottom: 20px; width: 69%;}
+	
+	.navbar-nav.pi-nav {display: block;}
+	#dl-menu { display:none;}
+	.navbar-header, #header.header-type-1 .nav-left .navbar-header { float: left;}
+	#search { top:35px;}
+        .collapse.navbar-collapse { margin-bottom:0px;}
+	.search_wrap .numa_search_btn .fa.fa-search { font-size:30px; height:31px; }	
+	.numa_banner {background:rgba(0, 0, 0, 0) url("../img/banner01.jpg") no-repeat scroll center -50px / cover; }
+	
+	}
+
+
+	
+	
+@media all and (max-width:991px){
+	
+	#top-bar-wrapper #top-bar #quick-links , #top-bar-wrapper #top-bar #quick-links li { width:auto;}
+	#top-bar-wrapper #top-bar {width: 94%;}
+	#top-bar-wrapper #top-bar #social-links { float:right;}
+    #top-bar-wrapper #top-bar #quick-links { margin-bottom:0px;}	
+    #copyright-container p { text-align:left; padding:8px 0px; clear: left;}
+	.numa_main-search {margin: 10% auto 0;}
+	.collapse.navbar-collapse {width: 78%;}
+	.logo {
+    height: auto;
+    margin: 10px 0 0;
+    width: 92px;
+}	
+	.search_wrap .numa_search_btn .fa.fa-search { }
+	.numa_main-search h2 {font-size: 35px;}
+	.page-title-3 .pt-info p, .page-title-2 .pt-title, .page-title-3 .pt-title { text-align:left;}
+	
+#header-wrapper, .blog-post-box { opacity:1;}
+.blog-post-box  {right: 0px; position:relative;}
+.home_about { position:relative; top:0px; opacity:1;}
+#what_can01 { padding:35px 0;}
+#what_can01  article{text-align:center; width:100%;}
+.have_any_more { position:relative; right:0px;  opacity:1;}
+.home_contact {position:relative; left:0px;  opacity:1;}
+.home_contact > h2{ text-align:center;}	
+#news_letter_email { margin-bottom:10px;}	
+#copyright-container {padding: 45px 0 0;}
+#copyright-container .col-md-4.col-sm-4.col-xs-12 { margin-bottom: 30px;}
+.map_element { height:auto;}	
+
+
+
+
+
+
+
+
+
+	
+	}
+
+@media all and (max-width:768px){
+
+.numa_banner { height:532px; background:url('../img/banner01.jpg')no-repeat center -50px / cover  }
+
+}
+
+@media all and (max-width:767px){
+.numa_banner { height:451px; background:url('../img/banner01.jpg')no-repeat center 0px / cover  }
+.collapse.navbar-collapse {display: block;}
+.navbar-nav.pi-nav {display: none;}
+#dl-menu {display: block;}
+.navbar-nav.pi-nav {display: none;}
+#dl-menu { display:block;}
+.collapse.navbar-collapse { margin-top:18px;}
+#search { top:0px;}
+.logo {margin: 10px 0;}
+.collapse.navbar-collapse { width:235px;}
+.numa_main-search h2 {font-size:31px}
+.panel-group .panel { width:96%; margin:0 auto;}
+.panel-heading [data-toggle="collapse"]::after { right: -8px; font-size:13px; }
+.row.disease_details { margin:0 auto;}
+.symptom_wrap { display:block;  margin: 0 auto 30px; width: 97%;}
+.symptom_wrap ul li {width: 48%;}
+.dl-menuwrapper button { padding-right:0px; padding-left: 40px; left:194px; width: auto;  background: #fff; height: 40px; }
+
+.dl-menuwrapper button::after {
+    background: #21292f none repeat scroll 0 0;
+box-shadow: 0 10px 0 #21292f, 0 20px 0 #21292f;}
+.dl-menuwrapper button:hover {background: #fff;}
+.dl-menuwrapper button.dl-active {background: #fff;}	
+.dl-menuwrapper ul {background: #21292f;}	
+.row.disease_details {margin: 0 auto 20px;}
+.dl-menuwrapper .dl-menu {margin: 2px 0 0;}	
+.article_detail_video { width:96%;}
+.article_detail_video iframe { width:100%;}
+.numa_main-search .search_wrap .shearch_here {width: 86%;}
+.search_wrap .numa_search_btn {width: 14%;}
+
+.recognised .col-md-3.col-sm-3 > img {
+    display: table;
+    margin: auto auto 10px;
+}
+
+
+.menu-ui {
+    
+    border-left: 1px solid rgba(0, 0, 0, 0.4);
+    border-radius: 0px;
+  
+    position: static;
+    
+    width: 100%;
+
+}
+.map_element #map {width:100%;}
+
+
+
+}
+
+@media all and (max-width:550px){
+	.yes_no.large_btn a { float:none;}
+	
+	
+}
+
+
+
+@media all and (max-width:480px){
+	.numa_main-search h1 {font-size: 26px; line-height: 30px;}
+	.numa_main-search h2 {font-size:24px; margin: 15px auto;}
+	.numa_main-search .search_wrap .shearch_here { width:85%;}
+	.search_wrap .numa_search_btn { width:15%;}
+	.numa_main-search {margin: 24% auto 0;}
+	.page-title-3 .pt-info .icon i ,.page-title-3 .pt-info .icon { width:40px; height:40px; font-size:25px; }
+	.page-title-3 .pt-info p {padding: 0 0 0 50px; line-height: 42px; font-size: 26px}
+	.post-body .numa_blog .post-media { float:none; width:100%;}
+	.article_detail_img { float:none; width:100%;}
+	.symptom_wrap ul li {width: 100%;}
+	.col-md-6.col-sm-8.col-xs-11.helpful_wrap > h1 {
+    font-size: 28px;
+}
+	
+}
+
+
+@media all and (max-width:479px){
+	
+	.numa_main-search { padding:0px;}
+	.search_wrap .numa_search_btn .fa.fa-search {
+    font-size: 30px; height:31px;}
+	.logo {width: 70px;}
+	iframe { width:100%;}
+	
+	.collapse.navbar-collapse {width: 205px; margin-top: 9px;}
+	.dl-menuwrapper button { left: 165px;}
+	.selectize-control .selectize-input input {font-size: 15px;}
+	
+	.save_bookmark {font-size: 12px !important;}
+	
+	.delete_bookmark {font-size: 12px !important;}
+	
+	
+	
+	
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
