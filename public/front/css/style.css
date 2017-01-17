@@ -7388,9 +7388,9 @@ ul.aside_widgets {
 
 .login_mobile .form-control {
     border-radius: 0;
-/*    text-align: center;
-*/    border: 1px solid #5dc55d;
-    border-right-color: 
+/*    text-align: center; */   
+    border: 1px solid #5dc55d;
+/*    border-right-color: */
 }
 
 .login_i {

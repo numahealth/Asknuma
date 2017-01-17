@@ -291,7 +291,7 @@ table.dataTable.no-footer { border-bottom: 1px solid #ababab;}
 	height:0;
 }
 .chatboxmessage:before,
-.chatboxmessage:after,{
+.chatboxmessage:after{
   display: table;
   content: " ";
 }
