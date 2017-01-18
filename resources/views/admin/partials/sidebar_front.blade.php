@@ -40,8 +40,8 @@
         //error_log('IP address --->   ' . $ip);
         //error_log(var_dump($details));
         $location = property_exists($details, 'city') ? $details->city : 'Lagos ';
-        $location .= property_exists($details, 'region') ? $details->region : ', West Africa ';
-        error_log('LOcation --->   ' . $location);
+        $location .= property_exists($details, 'region') ? $details->region : ', Nigeria ';
+        //error_log('LOcation --->   ' . $location);
 
         DB::table('numa_search_history')->insert(
                 ['location' => $location, 'login_status' => $login_status, 
