@@ -1,5 +1,5 @@
 <footer id="site-footer">
-	<section>©2016 All Rights Reserved by Numa Health </section>
+	<section>©2017 All Rights Reserved by Numa Health </section>
 </footer>
 <nav id="menu" data-search="close">
   <ul>
