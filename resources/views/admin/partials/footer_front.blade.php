@@ -115,24 +115,24 @@
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <?php if (\Auth::check()) { ?>
     <script>
-                $(document).ready(function () {
-                    setInterval(function () {
-                        $.ajax({
-                            url: "<?php echo url('admin/welcome/unread') ?>",
-                            method: 'POST',
-                            data: {
-                                '_token': '<?php echo csrf_token(); ?>',
-                            },
-                            success: function (result) {
-                                $('.mesg').html('Message(' + result + ')')
+                    $(document).ready(function () {
+                        setInterval(function () {
+                            $.ajax({
+                                url: "<?php echo url('admin/welcome/unread') ?>",
+                                method: 'POST',
+                                data: {
+                                    '_token': '<?php echo csrf_token(); ?>',
+                                },
+                                success: function (result) {
+                                    $('.mesg').html('Message(' + result + ')')
 
-                            }});
+                                }});
 
-                    }, 5000);
+                        }, 5000);
 
 
 
-                });
+                    });
     </script>
 
 <?php } ?>
@@ -144,6 +144,12 @@
         maxItems: 1,
     });
 
+</script>
+<script>
+    $('.selectize-input.items.has-options.not-full  input').on('keyup', function () {
+        //console.log('clicked ---');
+        $('#typed_text').val($('.selectize-input.items.has-options.not-full  input').val());
+    });
 </script>
 </body>
 </html>

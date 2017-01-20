@@ -70,39 +70,51 @@ use AuthenticatesAndRegistersUsers,
     protected function create(array $data) {
         $password = rand(150000, 150000000);
         $number = '+' . $data['phone_code'] . '' . $data['phone'];
-        $message = 'Hello ' . $data['first_name'] . ', your username is : ' . $data['email'] . '.  Password : ' . $password . '. Login and change it now at https://asknuma.com/asknuma';
+        $message = 'Hello ' . $data['first_name'] . ', your username is : ' 
+                . $data['email'] . '.  Password : ' . $password 
+                . '. Login and change it now at https://asknuma.com/asknuma';
         ///Twilio::message($number,$message);
-//        Twilio::message($number, $message);
-//        Mail::send('admin.users.view', ['user_detail' => array('name' => $data['first_name'], 'username' => $data['email'], 'password' => $password)], function ($message) use ($data) {
-//            $message->from('info@numa.io', 'Numa Health');
-//
-//            $message->to($data['email'])->subject('Welcome to your AskNuma account!');
-//        });
-        $apikey = '8954af9a4315019f1d0f8082f8925744-us9';
-        $auth = base64_encode('user:' . $apikey);
-
-        $datas = array(
-            'apikey' => $apikey,
-            'email_address' => $data['email'],
-            'status' => 'subscribed',
-            'merge_fields' => array(
-                'FNAME' => $data['first_name'] . ' ' . $data['last_name']
-            )
+        
+        // send SMS, EMAIL and MailChimp subscription only on live server
+        $blacklist = array(
+            '127.0.0.1',
+            '::1',
+            'localhost'
         );
-        $json_data = json_encode($datas);
+        if (!in_array($_SERVER['REMOTE_ADDR'], $blacklist)) {
+            Twilio::message($number, $message);
+            Mail::send('admin.users.view', ['user_detail' => array('name' => $data['first_name'], 'username' => $data['email'], 'password' => $password)], function ($message) use ($data) {
+                $message->from('info@numa.io', 'Numa Health');
 
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, 'https://us9.api.mailchimp.com/3.0/lists/d29163d261/members/');
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json',
-            'Authorization: Basic ' . $auth));
-        curl_setopt($ch, CURLOPT_USERAGENT, 'PHP-MCAPI/2.0');
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $json_data);
+                $message->to($data['email'])->subject('Welcome to your AskNuma account!');
+            });
+            $apikey = '8954af9a4315019f1d0f8082f8925744-us9';
+            $auth = base64_encode('user:' . $apikey);
 
-        $result = curl_exec($ch);
+            $datas = array(
+                'apikey' => $apikey,
+                'email_address' => $data['email'],
+                'status' => 'subscribed',
+                'merge_fields' => array(
+                    'FNAME' => $data['first_name'] . ' ' . $data['last_name']
+                )
+            );
+            $json_data = json_encode($datas);
+
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, 'https://us9.api.mailchimp.com/3.0/lists/d29163d261/members/');
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json',
+                'Authorization: Basic ' . $auth));
+            curl_setopt($ch, CURLOPT_USERAGENT, 'PHP-MCAPI/2.0');
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $json_data);
+
+            $result = curl_exec($ch);
+        }
+
         return User::create([
                     'name' => $data['first_name'] . ' ' . $data['last_name'],
                     'email' => $data['email'],
@@ -131,39 +143,50 @@ use AuthenticatesAndRegistersUsers,
     protected function signup(array $data) {
         $password = rand(150000, 150000000);
         $number = '+' . $data['phone_code'] . '' . $data['phone'];
-        $message = 'Hello ' . $data['first_name'] . ', your username is : ' . $data['email'] . '.  Password : ' . $password . '. Login and change it now at https://asknuma.com/asknuma';
-        ///Twilio::message($number,$message);
-        Twilio::message($number, $message);
-        Mail::send('admin.users.view', ['user_detail' => array('name' => $data['first_name'], 'username' => $data['email'], 'password' => $password)], function ($message) use ($data) {
-            $message->from('info@numa.io', 'Numa Health');
-
-            $message->to($data['email'])->subject('Welcome to your AskNuma account!');
-        });
-        $apikey = '8954af9a4315019f1d0f8082f8925744-us9';
-        $auth = base64_encode('user:' . $apikey);
-
-        $datas = array(
-            'apikey' => $apikey,
-            'email_address' => $data['email'],
-            'status' => 'subscribed',
-            'merge_fields' => array(
-                'FNAME' => $data['first_name'] . ' ' . $data['last_name']
-            )
+        $message = 'Hello ' . $data['first_name'] . ', your username is : ' 
+                . $data['email'] . '.  Password : ' . $password 
+                . '. Login and change it now at https://asknuma.com/asknuma';
+        
+        // send SMS, EMAIL and MailChimp subscription only on live server
+        $blacklist = array(
+            '127.0.0.1',
+            '::1',
+            'localhost'
         );
-        $json_data = json_encode($datas);
+        if (!in_array($_SERVER['REMOTE_ADDR'], $blacklist)) {
+            Twilio::message($number, $message);
+            Mail::send('admin.users.view', ['user_detail' => array('name' => $data['first_name'], 'username' => $data['email'], 'password' => $password)], function ($message) use ($data) {
+                $message->from('info@numa.io', 'Numa Health');
 
-        $ch = curl_init();
-        curl_setopt($ch, CURLOPT_URL, 'https://us9.api.mailchimp.com/3.0/lists/d29163d261/members/');
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json',
-            'Authorization: Basic ' . $auth));
-        curl_setopt($ch, CURLOPT_USERAGENT, 'PHP-MCAPI/2.0');
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
-        curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($ch, CURLOPT_POSTFIELDS, $json_data);
+                $message->to($data['email'])->subject('Welcome to your AskNuma account!');
+            });
+            $apikey = '8954af9a4315019f1d0f8082f8925744-us9';
+            $auth = base64_encode('user:' . $apikey);
 
-        $result = curl_exec($ch);
+            $datas = array(
+                'apikey' => $apikey,
+                'email_address' => $data['email'],
+                'status' => 'subscribed',
+                'merge_fields' => array(
+                    'FNAME' => $data['first_name'] . ' ' . $data['last_name']
+                )
+            );
+            $json_data = json_encode($datas);
+
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, 'https://us9.api.mailchimp.com/3.0/lists/d29163d261/members/');
+            curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json',
+                'Authorization: Basic ' . $auth));
+            curl_setopt($ch, CURLOPT_USERAGENT, 'PHP-MCAPI/2.0');
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, $json_data);
+
+            $result = curl_exec($ch);
+        }
+
         return User::create([
                     'name' => $data['first_name'] . ' ' . $data['last_name'],
                     'email' => $data['email'],

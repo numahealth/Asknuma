@@ -15,11 +15,19 @@
     $position = strpos($breadcum, "Search");
     $detail = strpos($breadcum, "Article Details");
     $details = strpos($breadcum, "Blog");
-    $keyword = DB::table('searchkeyword')
-            ->select('searchkeyword.keyword')
-            ->where('searchkeyword.id', '=', @Session::get('key'))
-            ->get();
+
     if ($position == 1) {
+        $keyword = DB::table('searchkeyword')
+                ->select('searchkeyword.keyword')
+                ->where('searchkeyword.id', '=', @Session::get('key'))
+                ->get();
+
+        if ($keyword == NULL || empty($keyword)) {
+            $key = @Session::get('key');
+        } else {
+            $key = $keyword[0]->keyword;
+        }
+
         if (Auth::check()) {
             $user_id = Auth::user()->id;
             $login_status = 1;
@@ -34,23 +42,24 @@
         } else {
             $ip = $_SERVER['REMOTE_ADDR'];
         }
-
         //$ip = "103.225.42.90";
-        $details = json_decode(file_get_contents("http://ipinfo.io/{$ip}/json"));
-        //error_log('IP address --->   ' . $ip);
-        //error_log(var_dump($details));
+        try {
+            $details = json_decode(file_get_contents("http://ipinfo.io/{$ip}/json"));
+        } catch (Exception $e) {
+            $details = json_encode(new stdClass);
+        }
+
         $location = property_exists($details, 'city') ? $details->city : 'Lagos ';
-        $location .= property_exists($details, 'region') ? $details->region : ', Nigeria ';
-        //error_log('LOcation --->   ' . $location);
+        $location .= property_exists($details, 'region') ? ', ' . $details->region : ', Nigeria ';
 
         DB::table('numa_search_history')->insert(
-                ['location' => $location, 'login_status' => $login_status, 
+                ['location' => $location, 'login_status' => $login_status,
                     'status' => 'Active', 'user_id' => $user_id,
                     'ip_address' => $_SERVER['REMOTE_ADDR'],
-                    'seach_keyword' => $keyword[0]->keyword,
+                    'seach_keyword' => $key,
                     'created_date' => date('Y-m-d H:i:s')]
         );
-        echo '<h1>Your symptoms point towards <strong>"' . $keyword[0]->keyword . '"</strong></h1>';
+        echo '<h1>Your symptoms point towards <strong>"' . $key . '"</strong></h1>';
     } else if ($detail == 1) {
         $details = DB::table('diseasesarticle')
                 ->select('article_title')
@@ -76,11 +85,11 @@
             $breadcum = '<a href="' . url('/our_blog') . '">Blog</a>  /  ' . $details[0]->blog_name;
         } else {
             ?>
-                                                                        <h1>{{ $breadcum  }}</h1>
+                                                                                                        <h1>{{ $breadcum  }}</h1>
         <?php } ?>
-                                                                }
-                                                                else {?>
-                                                                <h1>{{ $breadcum  }}</h1>
+                                                                                }
+                                                                                else {?>
+                                                                                <h1>{{ $breadcum  }}</h1>
     <?php } ?>
                                                         
                       
@@ -101,9 +110,8 @@
                 <!-- .col-md-12 start -->
                 <div class="col-md-12">
                     <ul class="breadcrumb">
-                        <li>You are here:</li>
                         <li><a href="{{url('')}}">Home</a></li>
-                        <li><span class="active"><?php echo $breadcum ?></span></li>
+                        <li> <span class="fa fa-angle-right"></span> <span class="active"><?php echo $breadcum ?></span></li>
                     </ul><!-- .breadcrumb end -->
                 </div><!-- .col-md-12 end -->
             </div><!-- .row end -->

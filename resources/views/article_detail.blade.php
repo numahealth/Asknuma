@@ -1,5 +1,4 @@
 @extends('admin.layouts.front')
-
 @section('content')
 <?php
 $detail = DB::table('diseasesarticle')
@@ -22,14 +21,12 @@ if (empty($detail)) {
             @else
             <img width="100%"src="{{ URL::asset('public/front/img') }}/article.jpg">
             @endif
-
         </div>
         <?php
         echo $detail[0]->article_description;
         ?>
         @if($detail[0]->article_video!= '')
         <div class="article_detail_video">
-
             <?php echo $detail[0]->article_video; ?>	
         </div>
         @endif
