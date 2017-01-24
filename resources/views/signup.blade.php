@@ -1,16 +1,11 @@
 @extends('admin.layouts.front')
-
 @section('content')
 <div class="">
-
     <div class="container-fluid login_mobile">
-
         <h1>Signup</h1>
-
         <div class="alert alert-danger col-sm-12" id="login-alert" style="display:none"></div>
         @if (count($errors->signup) > 0)
         <div class="alert alert-danger">
-
             <ul>
                 @foreach ($errors->signup->all() as $error)
                 <li>{{ $error }}</li>
@@ -21,22 +16,18 @@
         @if (Session::has('message'))
         {{--*/ $forclicknregistration = 1 /*--}}
         <div class="alert alert-success">
-            <ul><li>
+            <ul>
+                <li>
                     {{ Session::get('message') }}
-
-
-                </li></ul>
+                </li>
+            </ul>
         </div>
         @endif
-        <form class="form-horizontal" role="form" method="POST" action="{{ url('/signup') }}" id='validation_form_signup'>
+        <form class="form-horizontal" role="form" method="POST" action="{{ url('/signup') }}" 
+              id='validation_form_signup'>
             <input type="hidden"
                    name="_token"
                    value="{{ csrf_token() }}"> 
-
-
-
-
-
             <div class="input-group" > 
                 {!! Form::text('first_name', old('first_name'), ['class'=>'form-control', 'placeholder'=> 'First Name*']) !!}
                 <span class="input-group-addon"><i class="fa fa-user"></i></span>
@@ -75,33 +66,25 @@
                 $symptom = DB::table('country_code')->get();
                 if (!empty($symptom)) {
                     foreach ($symptom as $records) {
-
                         $values[$records->phonecode] = $records->nicename . ' +' . $records->phonecode;
                     }
                 }
                 ?>
                 {!! Form::select('phone_code', $values, old('phone_code',234), array('style'=>'border-right: 1px solid #53b753 !important;', 'id'=>'search_keyword','class'=>'form-control phone_code phpn_drops')) !!}
-
                 {!! Form::number('phone', old('phone'), ['min'=>1,'class'=>'form-control', 'placeholder'=> 'Contact Number*','style'=>'width:54%']) !!}
                 <span class="input-group-addon"><i class="fa fa-phone"></i></span>
             </div>
-
             <label for="phone" generated="true" class="error error_reg" style="display:none"></label>
             <div class="form-group">
                 <div class="col-xs-12 col-sm-12">
                     <button type="submit" style="margin-top:15px" class="btn btn-login">Signup</button>
                 </div>
             </div>
-
-
-
             <div class="form-group sign_up">
-
                 <div class="col-xs-12 text-center ">
                     <a href="{{url('/signin')}}">LOGIN</button>
                 </div>
             </div>
-
             {!! Form::close() !!}
     </div>
 </div>

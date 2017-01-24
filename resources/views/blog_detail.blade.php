@@ -106,6 +106,7 @@ if (empty($detail)) {
 <div class="container">
     <!--a href="{{ url('/map')}}" target="_blank" style="cursor:pointer"  data-toggle="modal" data-target="" class="btn btn-success search_health" > Search for health facility </a-->
 </div>
+
 <div class="container-fluid helpful">
     <div class="container">
         <div class="col-md-6 col-sm-8 col-xs-11 helpful_wrap"> 
