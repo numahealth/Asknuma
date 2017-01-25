@@ -1,11 +1,20 @@
 @extends('admin.layouts.front')
 @section('content')
 <div class="container"> 
-    <div class="row" style="overflow: hidden;">
+    <div class="row" style="overflow: hidden; margin-bottom: 15px;">
         <div class="col-md-12">
             <?php
             $keyword = @Session::get('key');
+            $keyword_text = $keyword;
             if ((is_int($keyword) || ctype_digit($keyword)) && (int) $keyword > 0) {
+                // once i get a keyword, i need to find all symptoms that the keyword is related to.
+                $text = DB::table('searchkeyword')
+                        ->select('keyword')
+                        ->where('id', '=', $keyword)
+                        ->get();
+                if (!empty($text)) {
+                    $keyword_text = $text[0]->keyword;
+                }
                 $empty_record = 1;
                 $values = array();
                 $symptom = DB::table('symptom_search')
@@ -21,13 +30,20 @@
                 } else {
                     $group = DB::table('group')
                             ->join('diseases', 'diseases.id', '=', 'group.dieases')
-                            ->select('group.mapping', 'group.id', 'group.dieases')
+                            ->select('group.mapping', 'group.name', 'group.id', 'group.dieases')
                             ->where('diseases.status', '=', 'Active')
                             ->whereIn('group.symptom', $result)
                             ->get();
                     if (empty($group)) {
                         $empty_record = 0;
                     }
+                }
+                // if $symptom or $group returns empty, we need to load random stuffs
+                if ($empty_record === 0) {
+                    $random_articles = TRUE;
+                    $random_posts = TRUE;
+                    $articles = loadRandomArticles();
+                    $blog_posts = loadRandomPosts();
                 }
             } else {
                 $empty_record = 0;
@@ -46,7 +62,7 @@
 
                 if (empty($articles)) {
                     $random_articles = TRUE;
-                    $articles = DB::table('diseasesarticle')->inRandomOrder()->take(4)->get();
+                    $articles = loadRandomArticles();
                 }
 
                 $blog_posts = DB::table('blog')
@@ -61,8 +77,16 @@
                         ->get();
                 if (empty($blog_posts)) {
                     $random_posts = TRUE;
-                    $blog_posts = DB::table('blog')->inRandomOrder()->take(4)->get();
+                    $blog_posts = loadRandomPosts();
                 }
+            }
+
+            function loadRandomArticles() {
+                return DB::table('diseasesarticle')->inRandomOrder()->take(4)->get();
+            }
+
+            function loadRandomPosts() {
+                return DB::table('blog')->inRandomOrder()->take(4)->get();
             }
             ?>
             @if($empty_record==1) 
@@ -76,16 +100,16 @@
                     echo '<div class="alert alert-warning alert-dismissible" role="alert">';
                     echo '<button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
                     echo '<strong>Oops!</strong> No article related to "'
-                    . $keyword . '" was found <br/></div>';
-                    echo '<h4>Articles you may like:</h4>';
+                    . $keyword_text . '" was found <br/></div>';
+                    echo '<h4 style="margin-bottom: -15px;">Articles you may like:</h4>';
                 } else {
-                    echo '<h4>Articles that may be related to your search term "' . $keyword . '"</h4>';
+                    echo '<h4 style="margin-bottom: -15px;">Articles that may be related to your search term "' . $keyword . '"</h4>';
                 }
                 ?>
                 <!-- Begining of custom search. This search is for keywords not stored as symptoms in the database -->
                 @foreach ($articles as $art)
                 <div class="col-md-6" style="margin-bottom: -99999px; padding-bottom: 99999px;">
-                    <section class="fancy-heading left">
+                    <section class="fancy-heading left" style="margin-top: 30px; padding-top: 15px;">
                         <h3><span> {{ $art->article_title }} </span></h3>
                     </section>
                     <div class="article_detail_img">
@@ -108,18 +132,19 @@
                     </a>	
                 </div>
                 @endforeach
-                <div class="col-md-12 col-lg-12 col-sm-12" style="padding-top: 70px; clear: both;">
-                    <?php
-                    if ($random_posts) {
-                        echo '<h4>Check out these interesting blog posts:</h4>';
-                    } else {
-                        echo '<h4>Sugested blog post based on  "' . $keyword . '"</h4>';
-                    }
-                    ?>
+                <div class="col-md-12 col-lg-12 col-sm-12" style="padding-top: 70px; clear: both;
+                     margin-bottom: -15px;">
+                     <?php
+                     if ($random_posts) {
+                         echo '<h4 style="margin-bottom: -15px;">Check out these interesting blog posts:</h4>';
+                     } else {
+                         echo '<h4 style="margin-bottom: -15px;">Sugested blog post based on  "' . $keyword_text . '"</h4>';
+                     }
+                     ?>
                 </div>
                 @foreach ($blog_posts as $post)
                 <div class="col-md-6" style="margin-bottom: -99999px; padding-bottom: 99999px;">
-                    <section class="fancy-heading left">
+                    <section class="fancy-heading left" style="margin-top: 30px; padding-top: 15px;">
                         <h3><span> {{ $post->blog_name }} </span></h3>
                     </section>
                     <div class="article_detail_img">
@@ -148,37 +173,48 @@
     </div>
     @if($empty_record==1) 							
     <div class="row">
-        @foreach($group as $groups)
-        <?php
-        $article = DB::table('diseasesarticle')
-                ->select('id')
-                ->where('status', 'Active')
-                ->where('diseases_id', $groups->dieases)
-                ->orderBy('created_at', 'desc')
-                ->take(1)
-                ->get();
-        ?>
-        <?php if (@$article[0]->id != '') { ?>
-            <div class="symptom_wrap">
-                <ul class="nav">
-                    <?php
-                    $symptom_list = json_decode($groups->mapping);
-                    foreach (@$symptom_list as $sym) {
-                        $name_sym = DB::table('symptom')
-                                ->select('symptom_name')
-                                ->where('id', @$sym)
-                                ->get();
+        <div class="col-md-12">
+            <div>
+                @foreach($group as $groups)
+                <?php
+                $article = DB::table('diseasesarticle')
+                        ->where('status', 'Active')
+                        ->where('diseases_id', $groups->dieases)
+                        ->orderBy('created_at', 'desc')
+                        ->take(4)
+                        ->get();
+                ?>
+                <div class="symptom_wrap" style="font-size: 16px; margin-bottom: 10px; text-transform: uppercase;">
+                    <?php echo $groups->name; ?>
+                </div>
+                @foreach ($article as $art1)
+                <div class="col-md-6" style="margin-bottom: -9px; padding-bottom: 9px;">
+                    <section class="fancy-heading left">
+                        <h3><span> {{ $art1->article_title }} </span></h3>
+                    </section>
+                    <div class="article_detail_img">
+                        @if($art1->article_profile!= '')
+                        <img width="100%" src="{{ URL::asset('public/uploads') . '/'.  $art1->article_profile }}">
+                        @else
+                        <img width="100%" src="{{ URL::asset('public/front/img') }}/article.jpg">
+                        @endif
+                    </div>
+                    <p>
+                        <?php
+                        $plain_text = strip_tags($art1->article_description);
+                        echo ucfirst(substr($plain_text, 0, 500)
+                                . (strlen($plain_text) > 500 ? "..." : ""));
                         ?>
-                        <a href="{{ url('/article_details_small/'. @$article[0]->id)}}">  
-                            <li>  <i class="fa fa-angle-double-right"> </i>
-                                {{ @$name_sym[0]->symptom_name }}
-                            </li>
-                        </a>
-                    <?php } ?>
-                </ul>
-            </div>   
-        <?php } ?>
-        @endforeach
+                    </p>
+                    <a href="{{ url('/article_details/'.	$art1->id.'/'
+                                .str_replace(' ', '-',strtolower($art1->article_title)))}}" class="btn btn-success">
+                        <span style="text-transform: none;" class="fa fa-book"> Read More </span> 
+                    </a>	
+                </div>
+                @endforeach
+                @endforeach
+            </div>
+        </div>
     </div> 
     @endif
 </div>
@@ -202,12 +238,11 @@
             <div class="yes_no large_btn">
                 <a href="<?php echo $href; ?>" id="ask_doc" 
                    class="btn btn-info" <?php if (Auth::check()) { ?> data-toggle="modal" 
-                   data-target="#ask_doctor" <?php } else { ?> data-toggle="modal" 
-                   data-target="<?php echo $pop; ?>" <?php } ?> >
+                       data-target="#ask_doctor" <?php } else { ?> data-toggle="modal" 
+                       data-target="<?php echo $pop; ?>" <?php } ?> >
                     Speak with a Doctor
                 </a>
             </div>
-
         </div>
     </div>
 </div>

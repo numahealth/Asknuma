@@ -60,6 +60,15 @@
                 <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
             </div>
             <label for="email" generated="true" class="error error_reg" style="display:none"></label>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <div class="checkbox">
+                        <label>
+                            <input type="checkbox"> I accept <a href="#">Terms and Condition</a>
+                        </label>
+                    </div>
+                </div>
+            </div>
             <div class="input-group" style="margin-top: 15px; ">
                 <?php
                 $values = array();

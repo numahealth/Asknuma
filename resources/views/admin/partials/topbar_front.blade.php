@@ -19,10 +19,8 @@
                         </ul>
                     </div>
                     @endif 
-                    <form class="form-horizontal"
-                          role="form"
-                          method="POST"
-                          action="{{ url('login') }}">
+                    <form class="form-horizontal" role="form"
+                          method="POST" action="{{ url('login') }}">
                         <input type="hidden"
                                name="_token"
                                value="{{ csrf_token() }}">        
@@ -51,17 +49,10 @@
                             </button>
 
 
-
-
-
                             <input type="checkbox" class=""
                                    name="remember">{{ trans('quickadmin::auth.login-remember_me') }}
 
-
-
                         </div>
-
-
 
                         <div class="login_submint">
                             Don't have an account! 
@@ -94,7 +85,6 @@
                     <div class="alert alert-danger col-sm-12" id="login-alert" style="display:none"></div>
                     @if (count($errors) > 0)
                     <div class="alert alert-danger">
-
                         <ul>
                             @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
@@ -105,21 +95,18 @@
                     @if (Session::has('message'))
                     {{--*/ $forclicknregistration = 1 /*--}}
                     <div class="alert alert-success">
-                        <ul><li>
+                        <ul>
+                            <li>
                                 {{ Session::get('message') }}
-
-
-                            </li></ul>
+                            </li>
+                        </ul>
                     </div>
                     @endif
-                    <form class="form-horizontal" role="form" method="POST" action="{{ url('/register') }}" id='validation_form'>
+                    <form class="form-horizontal" role="form" method="POST" 
+                          action="{{ url('/register') }}" id='validation_form'>
                         <input type="hidden"
                                name="_token"
                                value="{{ csrf_token() }}"> 
-
-
-
-
 
                         <div class="input-group" > <span class="input-group-addon"><i class="fa fa-user"></i></span>
                             {!! Form::text('first_name', old('first_name'), ['class'=>'form-control', 'placeholder'=> 'First Name*']) !!}
@@ -154,7 +141,6 @@
                             $symptom = DB::table('country_code')->get();
                             if (!empty($symptom)) {
                                 foreach ($symptom as $records) {
-
                                     $values[$records->phonecode] = $records->nicename . ' +' . $records->phonecode;
                                 }
                             }
@@ -165,8 +151,30 @@
                         </div>
 
                         <label for="phone" generated="true" class="error error_reg" style="display:none"></label>
+                        <div class="form-group" style="margin-top: 10px;">
+                            <div class="col-sm-10">
+                                <div class="checkbox">
+                                    <label id="t_and_c_label">
+                                        <input type="checkbox" id="t_and_c"/> 
+                                        I accept 
+                                        <a href="{{url('term_condition')}}" style="color: #75d575;">
+                                            Terms of service
+                                        </a>
+                                        and 
+                                        <a href="{{url('privacy_policy')}}" style="color: #75d575;">
+                                            Privacy policy
+                                        </a>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
                         <div class="form-inline login_check" style="margin-top: 15px; ">
-                            <button style="margin-right: 15px;  border:0;" class="btn btn-info" type="submit"> Submit </button>
+                            <span id="t_and_c_error" class="error error_reg" style="display:none; padding: 5px;">
+                                Please accept Terms & privacy policy
+                            </span>
+                            <button style="margin-right: 15px;  border:0;" id="signupBtn" class="btn btn-info" type="submit">
+                                Submit 
+                            </button>
                         </div>
 
                         {!! Form::close() !!}
@@ -191,21 +199,21 @@
 
                 <!--ul id="social-links">
                 <?php if (\Auth::check()) { ?>
-                                            @if(\Auth::user()->role_id==1)
-                                                    {{--*/ $href = url('users') /*--}}
-                                                    
-                                            @else
-                                                    {{--*/ $href = url('admin/usermessage') /*--}}
-                                            @endif
-                                     <li> <i class="fa fa-user"></i> <a href="{{$href}}" >My Account </a> </li>
-                                     @if(\Auth::user()->role_id==2)
-                                                    <li> <i class="fa fa-wechat"></i> <a href="{{$href}}" id="mesg" >Message(0) </a> </li>
-                                                    
-                                            @endif
-                                     
+                                                                                        @if(\Auth::user()->role_id==1)
+                                                                                                {{--*/ $href = url('users') /*--}}
+                                                                                                
+                                                                                        @else
+                                                                                                {{--*/ $href = url('admin/usermessage') /*--}}
+                                                                                        @endif
+                                                                                 <li> <i class="fa fa-user"></i> <a href="{{$href}}" >My Account </a> </li>
+                                                                                 @if(\Auth::user()->role_id==2)
+                                                                                                <li> <i class="fa fa-wechat"></i> <a href="{{$href}}" id="mesg" >Message(0) </a> </li>
+                                                                                                
+                                                                                        @endif
+                                                                                 
                 <?php } else { ?>
-                              <li> <i class="fa fa-lock"></i> <a id="login_anchor" href="javascript:void(0)"  data-toggle="modal" data-target="#myModal">Login </a> </li>
-                              <li> <i class="fa fa-user"></i> <a id="register_anchor" href="javascript:void(0)"  data-toggle="modal" data-target="#myModal2">Sign Up</a> </li>
+                                                                          <li> <i class="fa fa-lock"></i> <a id="login_anchor" href="javascript:void(0)"  data-toggle="modal" data-target="#myModal">Login </a> </li>
+                                                                          <li> <i class="fa fa-user"></i> <a id="register_anchor" href="javascript:void(0)"  data-toggle="modal" data-target="#myModal2">Sign Up</a> </li>
                 <?php } ?>
                 </ul-->
                 <!-- #social-links end --> 
@@ -225,7 +233,6 @@
                         <div class="col-md-12"> 
                             <!-- .navbar.pi-mega start -->
                             <nav class="navbar navbar-default nav-left pi-mega" role="navigation"> 
-
                                 <!-- .navbar-header start -->
                                 <div class="navbar-header"> 
                                     <!-- .logo start -->
@@ -233,7 +240,6 @@
                                     <!-- logo end --> 
                                 </div>
                                 <!-- .navbar-header end --> 
-
                                 <!-- Collect the nav links, forms, and other content for toggling -->
                                 <div class="collapse navbar-collapse">
                                     <ul class="nav navbar-nav pi-nav">
@@ -380,6 +386,7 @@
     </header>
     <!-- #header.header-type-1.dark end --> 
 </div>
+
 <style>
     .phone_code{
         width:44%!important;
@@ -387,3 +394,17 @@
         margin-right:3px;
     }
 </style>
+
+<script>
+
+    document.getElementById('signupBtn').addEventListener('click', function (e) {
+        if (document.getElementById('t_and_c').checked) {
+            document.getElementById('t_and_c_error').style.display = 'none';
+        } else {
+            document.getElementById('t_and_c_error').style.display = 'block';
+            e.preventDefault();
+        }
+    }, false);
+
+
+</script>

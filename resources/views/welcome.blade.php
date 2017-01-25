@@ -25,7 +25,6 @@
             {!! Form::close() !!}
         </div>
         <h2>How can we help?</h2>
-
     </div>
 </div>
 
@@ -39,7 +38,6 @@
                 <div class="col-md-3 col-sm-3"> <img src="{{ URL::asset('public/front/img') . '/logo03.jpg' }}"></div>
                 <div class="col-md-3 col-sm-3"> <img src="{{ URL::asset('public/front/img') . '/logo02.jpg' }}"></div>         
                 <div class="col-md-3 col-sm-3"> <img src="{{ URL::asset('public/front/img') . '/logo04.jpg' }}"></div>
-
             </div>
         </div>
     </div>
@@ -55,9 +53,7 @@
                 <h2 style="color: #53b553;">About Us</h2>
             </section>
             <!-- .fancy-heading end -->
-
             <p class="text-center"> 
-
                 Numa Health builds delightful healthcare tools, made specially for busy achievers, that puts healthcare back in your hands. 
             </p>
 

@@ -11,17 +11,17 @@
 <script src="{{ URL::asset('public/quickadmin/js') }}/validate.js"></script>
 <script src="{{ URL::asset('public/quickadmin/js') }}/user_valid.js"></script>
 <script>
-    $(document).ready(function () {
-        $("#shows_dis").click(function () {
-            $("#refr").toggle(500);
-        });
-        $("#register_anchor").click(function () {
-            $(".oops").html('');
-        });
-        $("#ask_doc").click(function () {
-            $(".oops").html('Oops - you don’t seem to have a Numa account. Register below to speak to one our doctors and build your health profile.');
-        });
+$(document).ready(function () {
+    $("#shows_dis").click(function () {
+        $("#refr").toggle(500);
     });
+    $("#register_anchor").click(function () {
+        $(".oops").html('');
+    });
+    $("#ask_doc").click(function () {
+        $(".oops").html('Oops - you don’t seem to have a Numa account. Register below to speak to one our doctors and build your health profile.');
+    });
+});
 </script>
 <script>
     /* <![CDATA[ */
@@ -175,14 +175,14 @@
 @if (count($errors->login) > 0)
 <script>
     $(document).ready(function () {
-        $("#login_anchor").trigger('click')
+        $("#login_anchor").trigger('click');
     });
 </script>
 @endif 
-@if (count($errors) > 0 || @Session::get('click')==1))
+@if (count($errors) > 0 || @Session::pull('click')==1))
 <script>
     $(document).ready(function () {
-        $("#register_anchor").trigger('click')
+        $("#register_anchor").trigger('click');
     });
 </script>
 @endif 
@@ -193,7 +193,7 @@
         var typed_text = document.getElementById("typed_text").value;
         if (field_value === '' && (typed_text === '' || typed_text === 'typed_text')) {
             $('.selectize-input').css('border', 'red solid 2px');
-            return
+            return;
         }
         document.getElementById("form_sumit").submit();
     }
