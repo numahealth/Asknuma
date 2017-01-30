@@ -151,6 +151,10 @@
 
     // NEWSLETTER FORM AJAX SUBMIT
     $('.newsletter .submit').on('click', function (event) {
+        
+        return; // this function disabled by Tunde Michael on 30th Jan. 2017 
+        // because it throws errors as there is another function in javascripts_front.blade.php 
+        // performing the same function and reference to this was not found somewhere else
         event.preventDefault();
         var email = $(this).siblings('.email').val();
         var form_data = new Array({'Email': email});

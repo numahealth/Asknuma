@@ -6,7 +6,7 @@
 <script src="{{ URL::asset('public/front') }}/rs-plugin/js/jquery.themepunch.revolution.min.js"></script><!-- Revolution slider script --> 
 <script src="//cdnjs.cloudflare.com/ajax/libs/jquery.matchHeight/0.7.0/jquery.matchHeight-min.js"></script>
 <script src="{{ URL::asset('public/front') }}/js/jquery.countTo.js"></script><!-- Number counter animations --> 
-<script src="{{ URL::asset('public/front') }}/js/jquery.dlmenu.min.js"></script><!-- for responsive menu --> 
+<script src="{{ URL::asset('public/front') }}/js/jquery.dlmenu.min.js"></script><!-- for responsive menu -->
 <script src="{{ URL::asset('public/front') }}/js/include.js"></script><!-- custom js functions --> 
 <script src="{{ URL::asset('public/quickadmin/js') }}/validate.js"></script>
 <script src="{{ URL::asset('public/quickadmin/js') }}/user_valid.js"></script>
@@ -153,7 +153,7 @@ $(document).ready(function () {
 
             if ($(this).scrollTop() > 1400) {
                 $(".have_any_more").animate({opacity: '1', right: '0'}, 1000);
-                $(".home_contact").animate({opacity: '1', left: '0'}, 1000)
+                $(".home_contact").animate({opacity: '1', left: '0'}, 1000);
 
             }
         }
@@ -267,12 +267,12 @@ $(document).ready(function () {
         if (age == '' || comment == '')
         {
             $('#click_here').trigger('click');
-            return
+            return;
         }
         if (age < 0)
         {
             $('#click_here').trigger('click');
-            return
+            return;
         }
 
         $.ajax({
@@ -283,7 +283,7 @@ $(document).ready(function () {
                 '_token': '<?php echo csrf_token(); ?>',
                 'article_id': id,
                 'age': age,
-                'gender': gender,
+                'gender': gender
             },
             success: function (result) {
                 $("#thanks_question").trigger('click');
@@ -346,22 +346,28 @@ $(document).ready(function () {
     {
         var news = $('#news_letter_email').val();
         var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-        if (regex.test(news) == 0)
+        if (regex.test(news) == 0) // dont change to ===
         {
             $("#news_text_change").text('Please enter valid email.');
             $("#news_click").trigger('click');
         } else {
+            $("#newsLetterBtn").html('<img src="https://www.localhost/asknuma/public/front/img/6.gif"\n\
+                 style="width: 30px; height: 30px; margin-left: 6px;"/>');
+            //return;
             $.ajax({
                 url: "<?php echo url('admin/welcome/newsletter') ?>",
                 method: 'POST',
                 data: {
                     '_token': '<?php echo csrf_token(); ?>',
-                    'email': news,
+                    'email': news
                 },
                 success: function (result) {
 
                     $("#news_text_change").text('You’ve been subscribed & we’ll be sure to keep you up to date!');
                     $("#news_click").trigger('click');
+                    
+                    $("#newsLetterBtn").html('');
+                    $('#news_letter_email').val('');
 
                 }});
 

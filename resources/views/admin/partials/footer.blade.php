@@ -35,8 +35,8 @@
     });
 </script>
 
-<script type="text/javascript" src="https://asknuma.com/asknuma/public/quickadmin/dist/js/standalone/selectize.js"></script>
-<script type="text/javascript" src="https://asknuma.com/asknuma/public/quickadmin/js/index.js"></script>
+<script type="text/javascript" src="{{ Request::root() }}/public/quickadmin/dist/js/standalone/selectize.js"></script>
+<script type="text/javascript" src="{{ Request::root() }}/public/quickadmin/js/index.js"></script>
 
 <script>
      $('#symptom,#search_keyword').selectize({

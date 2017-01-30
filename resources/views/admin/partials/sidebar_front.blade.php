@@ -85,11 +85,11 @@
             $breadcum = '<a href="' . url('/our_blog') . '">Blog</a>  /  ' . $details[0]->blog_name;
         } else {
             ?>
-                                                                                                        <h1>{{ $breadcum  }}</h1>
+                                                                                                                        <h1>{{ $breadcum  }}</h1>
         <?php } ?>
-                                                                                }
-                                                                                else {?>
-                                                                                <h1>{{ $breadcum  }}</h1>
+                                                                                        }
+                                                                                        else {?>
+                                                                                        <h1>{{ $breadcum  }}</h1>
     <?php } ?>
                                                         
                       

@@ -2,8 +2,8 @@
     <div class="page-header-inner">
         <div class="page-header-inner">
             <div class="navbar-header">
-                <a href="https://asknuma.com/asknuma/users" class="navbar-brand">
-                   <img src="https://asknuma.com/asknuma/public/quickadmin/images/asknuma.png" />
+                <a href="{{ Request::root() }}" class="navbar-brand">
+                   <img src="{{ Request::root() }}/public/quickadmin/images/asknuma.png" />
                 </a>
             </div>
             <a href="javascript:;"

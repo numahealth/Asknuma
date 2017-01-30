@@ -18,49 +18,49 @@
 <script type="text/javascript" src="{{ URL::asset('public/user/assets/plugins/miscellaneous')}}/miscellaneous.js"></script>
 <!-- Library Themes Customize-->
 <script type="text/javascript" src="{{ URL::asset('public/user/assets/js')}}/caplet.custom.js"></script>
-<?php if( Auth::user()->flag==0 ) { ?>
-<script>
-$(document).ready(function(){
-$("#welcome_message").trigger("click");
-  });
-</script>
+<?php if (Auth::user()->flag == 0) { ?>
+    <script>
+    $(document).ready(function () {
+        $("#welcome_message").trigger("click");
+    });
+    </script>
 <?php } ?>
 <script>
-$(document).ready(function() {
-  
-    $.ajax({
-        	url:"<?php echo url('admin/welcome/unread_update')?>",
-            method:'POST',
-        	data:{
-				'_token':'<?php echo csrf_token();?>',
-        	},
-        	success: function(result){
-               
-				
-        }});
-        
+    $(document).ready(function () {
 
-});
-$(document).ready(function() {
-    $('#close_popup').click(function() {
-    var value= ($('#dont_show').prop('checked'))
-    var flag=0;
-    if(value)
-    {
-    	flag=1;
-    }
-    $.ajax({
-        	url:"<?php echo url('admin/welcome/message_deny')?>",
-            method:'POST',
-        	data:{
-				'_token':'<?php echo csrf_token();?>',
-				'value':flag,
-        	},
-        	success: function(result){
-				
-        }});
-        
+        $.ajax({
+            url: "<?php echo url('admin/welcome/unread_update') ?>",
+            method: 'POST',
+            data: {
+                '_token': '<?php echo csrf_token(); ?>',
+            },
+            success: function (result) {
+
+
+            }});
+
+
     });
-});
+    $(document).ready(function () {
+        $('#close_popup').click(function () {
+            var value = ($('#dont_show').prop('checked'))
+            var flag = 0;
+            if (value)
+            {
+                flag = 1;
+            }
+            $.ajax({
+                url: "<?php echo url('admin/welcome/message_deny') ?>",
+                method: 'POST',
+                data: {
+                    '_token': '<?php echo csrf_token(); ?>',
+                    'value': flag,
+                },
+                success: function (result) {
+
+                }});
+
+        });
+    });
 
 </script>

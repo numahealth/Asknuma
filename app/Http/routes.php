@@ -70,6 +70,12 @@ Route::get('/about', function () {
 Route::get('/FAQ', function () {
     return view('faq');
 });
+Route::get('/faq/{question}', function () {
+    return view('faq');
+});
+Route::get('/feedback', function () {
+    return view('feedback');
+});
 Route::get('/services', function () {
     return view('what_we_do');
 });
