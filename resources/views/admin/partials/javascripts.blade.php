@@ -57,4 +57,96 @@
         });
     });
 
+    $('#replyBtn').click(function () {
+        $("#msg_panel").toggle(500);
+        if ($(window).scrollTop() + $(window).height() === $(document).height()) {
+            $('html, body').animate({
+                scrollTop: 0
+            }, 200);
+        } else {
+            $('html, body').animate({
+                scrollTop: 9999
+            }, 500);
+        }
+        $(".notice_bar").fadeOut();
+    });
+
+    $("#sendReplyBtn").click(function () {
+        var val = $("#msg").val();
+        if (!val || val.trim() === '') {
+            $('.notice_bar').html('Please enter your reply');
+            $('.notice_bar').css('display', 'block');
+            return;
+        }
+        $("#sendReplyBtn").html('<img src="<?php echo url('public/front/img/6.gif') ?>"\n\
+                 style="width: 20px; height: 20px; display: inline;"/> \n\
+                <span style="display: inline; text-transform: none; margin-bottom: 50px;">Please wait...</span>');
+
+        $('.panel-body').css('opacity', 0.5);
+
+        var feedback_id = $('#feedback_id').val();
+        $.ajax({
+            url: "<?php echo url('admin/feedbacks/response') ?>",
+            method: 'POST',
+            data: {
+                _token: '<?php echo csrf_token(); ?>',
+                message: val,
+                feedback_id: feedback_id
+            },
+            success: function (result) {
+
+                $("#sendReplyBtn").html('<span style="display: inline;" class="fa fa-send"></span> Send Reply');
+                $('.panel-body').css('opacity', 1);
+
+                $("#msg").val('');
+                $("#msg_panel").fadeOut();
+
+                $(".notice_bar").text(result);
+                $(".notice_bar").fadeIn();
+            }
+        });
+
+    });
+
+    $('#addCategoryBtn').click(function (e) {
+        e.preventDefault();
+        var category = $('#categoryName').val();
+        if (!category || category.trim() === '') {
+            $('.notice_bar').text('Please enter category name');
+            $('.notice_bar').fadeIn();
+            return;
+        }
+        $('.notice_bar').text('');
+        $('.notice_bar').fadeOut();
+
+        $("#addCategoryBtn").html('<img src="<?php echo url('public/front/img/6.gif') ?>"\n\
+                 style="width: 20px; height: 20px; display: inline;"/> \n\
+                <span style="display: inline; text-transform: none; margin-bottom: 50px;">Please wait...</span>');
+
+        $('.panel-body').css('opacity', 0.5);
+
+        $.ajax({
+            url: "<?php echo url('admin/faqCategory/category') ?>",
+            method: 'POST',
+            data: {
+                _token: '<?php echo csrf_token(); ?>',
+                category: category.trim()
+            },
+            success: function (result) {
+                $("#addCategoryBtn").html('<span style="display: inline;" class="fa fa-save"></span> Save');
+                $('.panel-body').css('opacity', 1);
+                result = JSON.parse(result);
+                $('#category_id').append($("<option></option>")
+                        .attr("value", result['id'])
+                        .attr('selected', 'selected')
+                        .text(result['name']));
+                $('#categoryName').val('');
+
+                $(".notice_bar").text('Record saved successfully');
+                $(".notice_bar").fadeIn();
+            }
+        });
+
+    });
+
 </script>

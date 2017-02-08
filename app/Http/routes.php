@@ -28,7 +28,9 @@ Route::group(['middleware' => 'auth'], function () {
 
     Route::get('admin/message/store/', ['as' => 'message.store', 'uses' => 'Admin\MessageController@store']);
     Route::get('admin/setting/', ['uses' => 'Admin\SettingController@edit']);
+    Route::get('admin/feedbacks/view_reply/{id}', ['as' => 'admin.feedbacks.show', 'uses' => 'Admin\FeedbacksController@show']);
     Route::get('admin/reset_password/', ['uses' => 'Admin\SettingController@reset_password']);
+    Route::post('admin/feedbacks/response', ['as' => 'admin.feedbacks.response', 'uses' => 'Admin\FeedbacksController@saveResponse']);
     Route::post('admin/setting/update', ['as' => 'admin.userssetting.update', 'uses' => 'Admin\SettingController@update']);
     Route::post('admin/setting/pass_update', ['as' => 'admin.userssetting.pass_update', 'uses' => 'Admin\SettingController@pass_update']);
     Route::get('admin/bookmark/', ['as' => 'admin.searchhistory.bookmark', 'uses' => 'Admin\SearchHistoryController@bookmark']);
@@ -36,6 +38,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('admin/history/excel_download/', ['as' => 'test.excel_download', 'uses' => 'Admin\HistoryController@getexcel_download']);
     Route::get('admin/history/audit_excel_download/', ['as' => 'test.audit_excel_download', 'uses' => 'Admin\HistoryController@getaudit_excel_download']);
     Route::get('admin/feedback/excel_download/', ['as' => 'feedback.excel_download', 'uses' => 'Admin\FeedbackController@getexcel_download']);
+    Route::get('admin/feedbacks/', ['as' => 'admin.feedbacks.index', 'uses' => 'Admin\FeedbacksController@index']);
+    Route::get('admin/faq/{id}', ['as' => 'admin.faq.edit', 'uses' => 'Admin\FaqController@edit']);
     Route::post('admin/welcome/message_deny', ['as' => 'welcome.message_deny', 'uses' => 'Admin\WelcomeController@postMessage_deny']);
     Route::post('admin/welcome/sub_cat', ['as' => 'welcome.sub_cat', 'uses' => 'Admin\WelcomeController@postSub_cat']);
     Route::post('admin/welcome/unread', ['as' => 'welcome.unread', 'uses' => 'Admin\WelcomeController@unread']);
@@ -46,6 +50,8 @@ Route::post('admin/welcome/yes_no', ['as' => 'welcome.yes_no', 'uses' => 'Admin\
 Route::post('admin/welcome/question', ['as' => 'welcome.question', 'uses' => 'Admin\WelcomeController@postQuestion']);
 Route::post('admin/welcome/bookmark', ['as' => 'welcome.bookmark', 'uses' => 'Admin\WelcomeController@postBookmark']);
 Route::post('admin/welcome/newsletter', ['as' => 'welcome.newsletter', 'uses' => 'Admin\WelcomeController@postNewsletter']);
+Route::post('admin/welcome/feedback', ['as' => 'welcome.feedback', 'uses' => 'Admin\WelcomeController@postFeedback']);
+Route::post('admin/faqCategory/category', ['as' => 'faqCategory.category', 'uses' => 'Admin\FaqCategoryController@postCategory']);
 Route::post('/signin', ['as' => 'auth.signin', 'uses' => 'Auth\AuthController@postSignin']);
 Route::post('/signup', ['as' => 'auth.signup', 'uses' => 'Auth\AuthController@sign_register']);
 Route::post('/forget', ['as' => 'auth.forget', 'uses' => 'Auth\AuthController@postForget']);

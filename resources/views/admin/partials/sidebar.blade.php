@@ -16,6 +16,11 @@
                     <span class="title">{{ trans('quickadmin::admin.partials-sidebar-menu') }}</span>
                 </a>
             </li-->
+            <li style="display: none;">
+                <a href="{{ url('logout') }}">
+                    <button class="btn btn-xs btn-danger">Switch</button>
+                </a>
+            </li>
             <li @if(Request::path() == 'users') class="active" @endif >
                  <a href="{{ url('users') }}">
                     <i class="fa fa-users"></i>

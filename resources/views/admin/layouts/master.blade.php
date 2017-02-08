@@ -21,11 +21,13 @@
 
                 <!--<div class="row">-->
                 <?php $methos_name = substr(Route::currentRouteAction(), (strpos(Route::currentRouteAction(), '@') + 1)); ?>
-                <div class="col-md-<?php if ($methos_name == 'index' || $methos_name == 'getIndex') {
+                <div class="col-md-<?php
+                if ($methos_name == 'index' || $methos_name == 'getIndex' || $methos_name == 'show') {
                     echo '12';
                 } else {
                     echo "10 dummy";
-                } ?> ">
+                }
+                ?> ">
 
                     @if (Session::has('message'))
                     <div class="note note-info">

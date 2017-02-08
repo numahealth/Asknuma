@@ -3,16 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use Redirect;
-use Schema;
 use DB;
-use App\Test;
-use App\Http\Requests\CreateTestRequest;
-use App\Http\Requests\UpdateTestRequest;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Traits\FileUploadTrait;
-use Maatwebsite\Excel\Facades\Excel;
 use Auth;
+use Mail;
 USE Session;
 use App\SubCatetory;
 
@@ -21,7 +15,7 @@ class WelcomeController extends Controller {
     public function postSearch(Request $request) {
         $param = array_key_exists('dieases', $request->all()) ?
                 $request->all()['dieases'] : $request->all()['typed_text'];
-        $request->session()->put('key', $param); 
+        $request->session()->put('key', $param);
         return redirect('/search_result')->with('id_search', $param);
     }
 
@@ -178,6 +172,46 @@ class WelcomeController extends Controller {
                     ['type' => $_POST['type'], 'status' => 'Active', 'user_id' => $user_id, 'diseasesarticle_id' => $_POST['id'], 'feedback' => $_POST['message'], 'reason_id' => $reason_id, 'reasons' => $reasons, 'created_at' => date('Y-m-d H:i:s')]
             );
         }
+    }
+
+    public function postFeedback(Request $request) {
+        if (!Auth::check()) {
+            echo 'Please login';
+        }
+        
+        $create_dt = date("Y-m-d H:i:s");
+        $input = $request->all();
+        DB::table('user_feedback')->insert(
+                [
+                    'user_id' => Auth::user()->id,
+                    'feedback_type' => $input['feedback_type'],
+                    'feedback_message' => $input['message'],
+                    'feedback_purpose' => $input['purpose'],
+                    'satisfaction_level' => $input['satisfaction'],
+                    'feedback_given_as' => $input['given_as'],
+                    'created_at' => $create_dt,
+                    'status' => 'Active'
+                ]
+        );
+
+        // send mail only on production
+        $blackList = array(
+            'localhost',
+            '127.0.0.1',
+            '::1'
+        );
+        if (!in_array($_SERVER['REMOTE_ADDR'], $blackList)) {
+            Mail::send('admin.users.reply_by_doc', ['user_detail' =>
+                array(
+                    'name' => Auth::user()->name,
+                    'username' => Auth::user()->email
+                )], function ($message) {
+                $message->from('tobi@numa.io', 'Numa Health');
+                $message->to(Auth::user()->email)->subject('Numa Health : Thanks for your feedback.');
+            });
+        }
+        echo 'Thanks for your feedback. We will work on the issues raised'
+                . ' and get back to you shortly.';
     }
 
 }

@@ -348,10 +348,10 @@ $(document).ready(function () {
         var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
         if (regex.test(news) == 0) // dont change to ===
         {
-            $("#news_text_change").text('Please enter valid email.');
+            $("#news_text_change").text('Please enter a valid email address.');
             $("#news_click").trigger('click');
         } else {
-            $("#newsLetterBtn").html('<img src="https://www.localhost/asknuma/public/front/img/6.gif"\n\
+            $("#newsLetterBtn").html('<img src="<?php echo url('public/front/img/6.gif') ?>"\n\
                  style="width: 30px; height: 30px; margin-left: 6px;"/>');
             //return;
             $.ajax({
@@ -365,7 +365,7 @@ $(document).ready(function () {
 
                     $("#news_text_change").text('You’ve been subscribed & we’ll be sure to keep you up to date!');
                     $("#news_click").trigger('click');
-                    
+
                     $("#newsLetterBtn").html('');
                     $('#news_letter_email').val('');
 
@@ -383,4 +383,103 @@ $(document).ready(function () {
             }
         });
     });
+
+    $("#feedbackBtn").click(function () {
+        $("#interest_panel").fadeIn();
+        $("#feedbackBtn").css('border', '1px solid #75d575');
+        $("#bugBtn").css('border', '1px solid rgb(173, 173, 173)');
+        $("#feedBackType").val('Feedback');
+    });
+
+    $("#bugBtn").click(function () {
+        $("#interest_panel").fadeIn();
+        $("#bugBtn").css('border', '1px solid #75d575');
+        $("#feedbackBtn").css('border', '1px solid rgb(173, 173, 173)');
+        $("#feedBackType").val('Bug');
+    });
+
+    $("#interest").change(function () {
+        var val = $("#interest").val();
+        if (!val || val.trim() === '') {
+            $("#msg_panel").fadeOut();
+            $("#reason_panel").fadeOut();
+        } else {
+            $("#reason_panel").fadeIn();
+            $('html, body').animate({
+                scrollTop: $("#reason_panel").offset().top
+            }, 1000);
+        }
+    });
+
+    $("#reason").change(function () {
+        var val = $("#reason").val();
+        if (!val || val.trim() === '') {
+            $("#msg_panel").fadeOut();
+        } else {
+            $("#msg_panel").fadeIn();
+            $('html, body').animate({
+                scrollTop: $("#msg_panel").offset().top
+            }, 1000);
+        }
+    });
+
+    $("#sendFeedbackBtn").click(function () {
+        var val = $("#msg").val();
+        if (!val || val.trim() === '') {
+            $('.notice_bar').html('<span> Oops! </span>You are yet to enter your message');
+            $('.notice_bar').css('display', 'block');
+            $('html, body').animate({
+                scrollTop: $(".container").offset().top
+            }, 600);
+            return;
+        }
+        $("#sendFeedbackBtn").html('<img src="<?php echo url('public/front/img/6.gif') ?>"\n\
+                 style="width: 20px; height: 20px; display: inline;"/> \n\
+                <span style="display: inline; text-transform: none; margin-bottom: 50px;">Please wait...</span>');
+
+        $('.col-md-offset-1.col-lg-offset-1.col-md-8.col-lg-8').css('opacity', 0.5);
+
+        var feedBackType = $('#feedBackType').val();
+        var interest = $('#interest').val();
+        var reason = $('#reason').val();
+
+        $.ajax({
+            url: "<?php echo url('admin/welcome/feedback') ?>",
+            method: 'POST',
+            data: {
+                _token: '<?php echo csrf_token(); ?>',
+                message: val,
+                feedback_type: feedBackType,
+                purpose: reason,
+                satisfaction: '-',
+                given_as: interest
+            },
+            success: function (result) {
+
+                $("#sendFeedbackBtn").html('<span style="display: inline;" class="fa fa-send"></span> Send Feedback');
+                $('.col-md-offset-1.col-lg-offset-1.col-md-8.col-lg-8').css('opacity', 1);
+
+                $("#msg").val('');
+                $("#msg_panel").fadeOut();
+                $("#reason_panel").fadeOut();
+                $("#interest_panel").fadeOut();
+
+                $('html, body').animate({
+                    scrollTop: $(".container").offset().top
+                }, 600);
+                $(".notice_bar").text(result);
+                $(".notice_bar").fadeIn();
+
+            }
+        });
+
+
+    });
+
+    function scrollToId(id) {
+        $('html, body').animate({
+            scrollTop: $("#"+ id).offset().top
+        }, 500);
+    }
+
 </script>

@@ -13,11 +13,12 @@ use App\Role;
 use Laraveldaily\Quickadmin\Observers\UserActionsObserver;
 use Laraveldaily\Quickadmin\Traits\AdminPermissionsTrait;
 
-class User extends Model implements AuthenticatableContract,
-    AuthorizableContract,
-    CanResetPasswordContract
-{
-    use Authenticatable, Authorizable, CanResetPassword, AdminPermissionsTrait;
+class User extends Model implements AuthenticatableContract, AuthorizableContract, CanResetPasswordContract {
+
+    use Authenticatable,
+        Authorizable,
+        CanResetPassword,
+        AdminPermissionsTrait;
 
     /**
      * The database table used by the model.
@@ -31,9 +32,12 @@ class User extends Model implements AuthenticatableContract,
      *
      * @var array
      */
-    protected $fillable = ['phone_code','dob','name','active_medications','medical_history', 'email', 'password', 'role_id','phone','notes','profile_pic','updated_by','age','gender','status'];
-	public static $status = ["Active" => "Active", "Inactive" => "Inactive"];
-	public static $gender = ["Male" => "Male", "Female" => "Female","Other" => "Other"];
+    protected $fillable = ['phone_code', 'dob', 'name', 'active_medications', 'medical_history',
+        'email', 'password', 'role_id', 'phone', 'notes', 'profile_pic',
+        'updated_by', 'age', 'gender', 'status'];
+    public static $status = ["Active" => "Active", "Inactive" => "Inactive"];
+    public static $gender = ["Male" => "Male", "Female" => "Female", "Other" => "Other"];
+
     /**
      * The attributes excluded from the model's JSON form.
      *
@@ -41,15 +45,21 @@ class User extends Model implements AuthenticatableContract,
      */
     protected $hidden = ['password', 'remember_token'];
 
-    public static function boot()
-    {
+    public static function boot() {
         parent::boot();
-
         User::observe(new UserActionsObserver);
     }
 
-    public function role()
-    {
+    public function role() {
         return $this->belongsTo(Role::class);
     }
+
+    public function feedbacks() {
+        return $this->hasMany('App\UserFeedback');
+    }
+    
+    public function feedbackResponses() {
+        return $this->hasMany('App\UserFeedbackResponse');
+    }
+
 }

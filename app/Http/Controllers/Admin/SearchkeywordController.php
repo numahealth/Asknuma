@@ -10,97 +10,83 @@ use App\Http\Requests\CreateSearchkeywordRequest;
 use App\Http\Requests\UpdateSearchkeywordRequest;
 use Illuminate\Http\Request;
 
-
-
 class SearchkeywordController extends Controller {
 
-	/**
-	 * Display a listing of searchkeyword
-	 *
+    /**
+     * Display a listing of searchkeyword
+     *
      * @param Request $request
      *
      * @return \Illuminate\View\View
-	 */
-	public function index(Request $request)
-    {
-    	
+     */
+    public function index(Request $request) {
+
         $searchkeyword = SearchKeyword::all();
 
-		return view('admin.searchkeyword.index', compact('searchkeyword'));
-	}
+        return view('admin.searchkeyword.index', compact('searchkeyword'));
+    }
 
-	/**
-	 * Show the form for creating a new searchkeyword
-	 *
+    /**
+     * Show the form for creating a new searchkeyword
+     *
      * @return \Illuminate\View\View
-	 */
-	public function create()
-	{
-	    
-	    $status = SearchKeyword::$status;
-	    return view('admin.searchkeyword.create', compact("status"));
-	}
+     */
+    public function create() {
+        $status = SearchKeyword::$status;
+        return view('admin.searchkeyword.create', compact("status"));
+    }
 
-	/**
-	 * Store a newly created searchkeyword in storage.
-	 *
+    /**
+     * Store a newly created searchkeyword in storage.
+     *
      * @param CreateSearchKeywordRequest|Request $request
-	 */
-	public function store(CreateSearchKeywordRequest $request)
-	{
-	    
-		SearchKeyword::create($request->all());
+     */
+    public function store(CreateSearchKeywordRequest $request) {
 
-		return redirect()->route('admin.searchkeyword.index');
-	}
+        SearchKeyword::create($request->all());
 
-	/**
-	 * Show the form for editing the specified searchkeyword.
-	 *
-	 * @param  int  $id
+        return redirect()->route('admin.searchkeyword.index');
+    }
+
+    /**
+     * Show the form for editing the specified searchkeyword.
+     *
+     * @param  int  $id
      * @return \Illuminate\View\View
-	 */
-	public function edit($id)
-	{
-		$status = SearchKeyword::$status;
-		$searchkeyword = SearchKeyword::find($id);
-	    
-	    
-		return view('admin.searchkeyword.edit', compact('searchkeyword','status'));
-	}
-	public function bulk_upload()
-	{
-	    	$status = SearchKeyword::$status;
-		return view('admin.searchkeyword.excel', compact("status"));
-	}
-	/**
-	 * Update the specified searchkeyword in storage.
+     */
+    public function edit($id) {
+        $status = SearchKeyword::$status;
+        $searchkeyword = SearchKeyword::find($id);
+        return view('admin.searchkeyword.edit', compact('searchkeyword', 'status'));
+    }
+
+    public function bulk_upload() {
+        $status = SearchKeyword::$status;
+        return view('admin.searchkeyword.excel', compact("status"));
+    }
+
+    /**
+     * Update the specified searchkeyword in storage.
      * @param UpdateSearchKeywordRequest|Request $request
      *
-	 * @param  int  $id
-	 */
-	public function update($id, UpdateSearchKeywordRequest $request)
-	{
-		$searchkeyword = SearchKeyword::findOrFail($id);
+     * @param  int  $id
+     */
+    public function update($id, UpdateSearchKeywordRequest $request) {
+        $searchkeyword = SearchKeyword::findOrFail($id);
+        $searchkeyword->update($request->all());
+        return redirect()->route('admin.searchkeyword.index');
+    }
 
-        
+    /**
+     * Remove the specified searchkeyword from storage.
+     *
+     * @param  int  $id
+     */
+    public function destroy($id) {
+        SearchKeyword::destroy($id);
 
-		$searchkeyword->update($request->all());
-
-		return redirect()->route('admin.searchkeyword.index');
-	}
-
-	/**
-	 * Remove the specified searchkeyword from storage.
-	 *
-	 * @param  int  $id
-	 */
-	public function destroy($id)
-	{
-		SearchKeyword::destroy($id);
-
-		return redirect()->route('admin.searchkeyword.index');
-	}
+        return redirect()->route('admin.searchkeyword.index');
+    }
 
     /**
      * Mass delete function from index page
@@ -108,8 +94,7 @@ class SearchkeywordController extends Controller {
      *
      * @return mixed
      */
-    public function massDelete(Request $request)
-    {
+    public function massDelete(Request $request) {
         if ($request->get('toDelete') != 'mass') {
             $toDelete = json_decode($request->get('toDelete'));
             SearchKeyword::destroy($toDelete);
