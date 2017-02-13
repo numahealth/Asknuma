@@ -32,7 +32,7 @@
             url: "<?php echo url('admin/welcome/unread_update') ?>",
             method: 'POST',
             data: {
-                '_token': '<?php echo csrf_token(); ?>',
+                '_token': '<?php echo csrf_token(); ?>'
             },
             success: function (result) {
 
@@ -43,7 +43,7 @@
     });
     $(document).ready(function () {
         $('#close_popup').click(function () {
-            var value = ($('#dont_show').prop('checked'))
+            var value = ($('#dont_show').prop('checked'));
             var flag = 0;
             if (value)
             {
@@ -54,7 +54,7 @@
                 method: 'POST',
                 data: {
                     '_token': '<?php echo csrf_token(); ?>',
-                    'value': flag,
+                    'value': flag
                 },
                 success: function (result) {
 

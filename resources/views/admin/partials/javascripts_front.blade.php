@@ -476,10 +476,40 @@ $(document).ready(function () {
 
     });
 
+    $("#connect").click(function () {
+        $("#connect").css('border', '1px solid yellow');
+        $('html, body').animate({
+            scrollTop: $("#columns").offset().top + 100
+        }, 700);
+    });
+
+    $('#subscriptionBtn').click(function () {
+        $("#subscriptionBtn").html('<img src="<?php echo url('public/front/img/6.gif') ?>"\n\
+                 style="width: 20px; height: 20px; display: inline;"/> \n\
+                <span style="display: inline; text-transform: none; margin-bottom: 50px;">Please wait...</span>');
+
+        $('.col-md-12').css('opacity', 0.5);
+        $.ajax({
+            url: "<?php echo url('admin/welcome/subscribe') ?>",
+            method: 'POST',
+            data: {
+                _token: '<?php echo csrf_token(); ?>',
+            },
+            success: function (result) {
+                //console.log('Redirecting ---> ' + result);
+                window.location.href = result;
+            }
+        });
+
+
+    });
+
     function scrollToId(id) {
         $('html, body').animate({
-            scrollTop: $("#"+ id).offset().top
+            scrollTop: $("#" + id).offset().top
         }, 500);
     }
+
+
 
 </script>

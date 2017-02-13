@@ -140,9 +140,14 @@ use ThrottlesLogins;
                             ->withErrors($validator, 'signup')
                             ->withInput();
         }
-        $this->signup($request->all());
-        // Auth::guard($this->getGuard())->login($this->create($request->all()));
-        return redirect()->back()->withMessage('You’re awesome! Please check your email inbox in the next few minutes & follow the instructions to verify your account');
+        //$this->signup($request->all());
+        Auth::guard($this->getGuard())->login($this->create($request->all()));
+        if (Auth::user()->subscribed == TRUE) {
+            return redirect('admin/usermessage');
+        } else {
+            return redirect('subscriptions');
+        }
+        // return redirect()->back()->withMessage('You’re awesome! Please check your email inbox in the next few minutes & follow the instructions to verify your account');
     }
 
     protected function signup(array $data) {
@@ -170,7 +175,8 @@ use ThrottlesLogins;
         if (!in_array($_SERVER['REMOTE_ADDR'], $blackList)) {
             try {
                 Twilio::message($number, $message);
-                Mail::send('admin.users.view', ['user_detail' => array('name' => $data['first_name'], 'username' => $data['email'], 'password' => $password)], function ($message) use ($data) {
+                Mail::send('admin.users.view', ['user_detail' => array('name' => $data['first_name'],
+                        'username' => $data['email'], 'password' => $password)], function ($message) use ($data) {
                     $message->from('info@numa.io', 'Numa Health');
 
                     $message->to($data['email'])->subject('Welcome to your AskNuma account!');
@@ -230,14 +236,12 @@ use ThrottlesLogins;
             if (Auth::user()->role_id == 1) {
                 return redirect()->route('users.index');
             } else {
-                $direction = $_SERVER['HTTP_REFERER'];
-                if ($direction == 'https://asknuma.com/asknuma/login' || $direction == 'https://asknuma.com/asknuma/') {
+
+                if (Auth::user()->subscribed == TRUE) {
                     return redirect('admin/usermessage');
                 } else {
-                    return redirect()->back();
+                    return redirect('subscriptions');
                 }
-
-                //
             }
         }
 
@@ -273,10 +277,11 @@ use ThrottlesLogins;
                 return redirect()->route('users.index');
             } else {
 
-                return redirect('admin/usermessage');
-
-
-                //
+                if (Auth::user()->subscribed == TRUE) {
+                    return redirect('admin/usermessage');
+                } else {
+                    return redirect('subscriptions');
+                }
             }
         }
 

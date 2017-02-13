@@ -191,7 +191,13 @@ $name = DB::table('users')
         <div class="chatboxhead">
             <a style="outline: none;" href="#" id="feedback" data-toggle="modal" data-target="#feedbackDlg"></a>​
             <div class="chatboxtitle">
-                <span class="glyphicon glyphicon-question-sign pulse"></span> Type your medical question below to get an answer from one of our doctors
+                <span class="glyphicon glyphicon-question-sign pulse"></span> 
+                <span class="hidden-xs hidden-sm">
+                    Type your medical question below to get an answer from one of our doctors
+                </span>
+                <span class="hidden-lg hidden-md">
+                    Ask your medical questions
+                </span>
             </div>
             <div class="chatboxoptions">
                 <div class="dropdown">
@@ -202,6 +208,11 @@ $name = DB::table('users')
                         <li>
                             <a id="feedback2" href="#" data-toggle="modal" data-target="#feedbackDlg">
                                 <i class="fa fa-bullhorn" style="color: green;"></i> Feedback
+                            </a>
+                        </li>
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#ask_doctor">
+                                <i class="fa fa-info" style="color: green;"></i> Getting started
                             </a>
                         </li>
                     </ul>	
@@ -367,26 +378,59 @@ $name = DB::table('users')
         float: right;
         width: 90%;
     }
+    ul.nav.nav-tabs.nav-justified li a:hover {
+        color: #75d575;
+    }
 </style>
-<a href="#" id="welcome_message" class="btn btn-info hide"  data-toggle="modal" data-target="#ask_doctor"  >Ask A Doctor</a>
+<a href="#" id="welcome_message" class="btn btn-info hide"  data-toggle="modal" data-target="#ask_doctor"  >
+    Ask A Doctor
+</a>
 <div class="modal fade" id="ask_doctor" role="dialog">
     <div class="modal-dialog modal-md">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title" style="color:#75d575;"> Welcome, {{ ucwords(Auth::user()->name) }}</h4>
+                <h4 class="modal-title" style="color: #75d575;"> 
+                    Welcome, {{ ucwords(Auth::user()->name) }}
+                </h4>
             </div>
             <div class="modal-body">
-                Welcome to your personal Numa Account! This is where you can chat to one of our healthcare professionals, fill our your personal health profile & find healthcare products and services that you need. Before you get going, there are a few things you can do to make your experience awesome.
-                <br/>  <br/>Firstly, go to My Profile and change your password to something secure and memorable then tell us a bit more about yourself. You can upload a picture and note down and diseases or allergies you have had in the past. This all helps us to create a more personalised service for you. Go to your Messages and tell one of our doctors that this is your first time logging on so we can set up your first appointment. If you have any questions, send us an email on info@numa.io for a quick response!
+                <ul class="nav nav-tabs nav-justified" style="background-color: inherit;">
+                    <li role="presentation" class="active">
+                        <a data-toggle="tab" href="#getting_started">Getting started</a>
+                    </li>
+                    <li role="presentation">
+                        <a data-toggle="tab" href="#numa_video">Numa video</a>
+                    </li>
+                </ul>
+                <div class="tab-content">
+                    <div id="getting_started" class="tab-pane fade in active" style="color: #333;">
+                        Welcome to your personal Numa Account! This is where you can chat to one of our
+                        healthcare professionals, fill our your personal health profile & find healthcare
+                        products and services that you need. Before you get going, there are a few things
+                        you can do to make your experience awesome.
+                        <br/>  <br/>
+                        Firstly, go to My Profile and change your password to something secure
+                        and memorable then tell us a bit more about yourself. You can upload a picture and
+                        note down and diseases or allergies you have had in the past. This all helps us to
+                        create a more personalised service for you. Go to your Messages and tell one of 
+                        our doctors that this is your first time logging on so we can set up your first 
+                        appointment. If you have any questions, send us an email on info@numa.io for a 
+                        quick response!
+                    </div>
+                    <div id="numa_video" class="tab-pane fade">
+                        <iframe width="640" height="360" 
+                                src="https://www.youtube.com/embed/Q6QKX1EqzyY" 
+                                frameborder="0" allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
 
                 <div class="form-group">
                     </br>
-                    <label><input id="dont_show" type="checkbox" value=""> Don't show this message again.</label>
+                    <label><input id="dont_show" type="checkbox" value="">Don't show this message again.</label>
                 </div>
                 <button id="close_popup" type="button" class="btn btn-success" style=" float:none" data-toggle="modal" data-dismiss="modal" >Submit</button>
-
-
 
             </div>
 

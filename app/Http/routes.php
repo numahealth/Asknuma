@@ -51,6 +51,7 @@ Route::post('admin/welcome/question', ['as' => 'welcome.question', 'uses' => 'Ad
 Route::post('admin/welcome/bookmark', ['as' => 'welcome.bookmark', 'uses' => 'Admin\WelcomeController@postBookmark']);
 Route::post('admin/welcome/newsletter', ['as' => 'welcome.newsletter', 'uses' => 'Admin\WelcomeController@postNewsletter']);
 Route::post('admin/welcome/feedback', ['as' => 'welcome.feedback', 'uses' => 'Admin\WelcomeController@postFeedback']);
+Route::post('admin/welcome/subscribe', ['as' => 'welcome.subscribe', 'uses' => 'Admin\WelcomeController@postSubscription']);
 Route::post('admin/faqCategory/category', ['as' => 'faqCategory.category', 'uses' => 'Admin\FaqCategoryController@postCategory']);
 Route::post('/signin', ['as' => 'auth.signin', 'uses' => 'Auth\AuthController@postSignin']);
 Route::post('/signup', ['as' => 'auth.signup', 'uses' => 'Auth\AuthController@sign_register']);
@@ -87,6 +88,9 @@ Route::get('/services', function () {
 });
 Route::get('/blog', function () {
     return view('our_blog');
+});
+Route::get('/subscriptions', function () {
+    return view('subscriptions');
 });
 Route::get('/contact_us', function () {
     return view('contact_us');

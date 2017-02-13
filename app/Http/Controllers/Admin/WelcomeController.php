@@ -178,7 +178,7 @@ class WelcomeController extends Controller {
         if (!Auth::check()) {
             echo 'Please login';
         }
-        
+
         $create_dt = date("Y-m-d H:i:s");
         $input = $request->all();
         DB::table('user_feedback')->insert(
@@ -211,7 +211,18 @@ class WelcomeController extends Controller {
             });
         }
         echo 'Thanks for your feedback. We will work on the issues raised'
-                . ' and get back to you shortly.';
+        . ' and get back to you shortly.';
+    }
+
+    public function postSubscription(Request $request) {
+        if (Auth::user() == NULL) {
+            echo url('/');
+        } else {
+            $user = Auth::user();
+            $user->subscribed = TRUE;
+            $user->save();
+            echo url('admin/usermessage');
+        }
     }
 
 }
