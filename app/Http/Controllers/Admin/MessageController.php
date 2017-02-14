@@ -26,7 +26,6 @@ class MessageController extends Controller {
                 ->groupBy('user')
                 ->orderBy('numa_message_user.created_date', 'desc')
                 ->get();
-        //print_r($message); die;
         return view('admin.message.index', compact('message'));
     }
 
@@ -37,9 +36,10 @@ class MessageController extends Controller {
                 ->where('status', '=', 'Active')
                 ->where('user_id', '=', $id)
                 ->orWhere('user_to', '=', $id)
-                ->orderBy('numa_message.created_at', 'asc')
+                ->orderBy('numa_message.created_at', 'desc')
+                ->limit(10)
                 ->get();
-        //print_r($message);die;
+        $message = array_reverse($message);
         return view('admin.message.view', compact('message', 'main_message'));
     }
 
@@ -102,7 +102,23 @@ class MessageController extends Controller {
                     $message->to($user_send_detail[0]->email)->subject('Numa Health : Answer on your query.');
                 });
             }
-            return redirect()->route('admin.message.index')->withMessage('Message has been sent');
+            $message = DB::table('numa_message')
+                    ->select('numa_message.*')
+                    ->where('status', '=', 'Active')
+                    ->where('user_id', '=', Auth::user()->id)
+                    ->orWhere('user_to', '=', Auth::user()->id)
+                    ->orderBy('numa_message.created_at', 'desc')
+                    ->limit(10)
+                    ->get();
+            $message = array_reverse($message);
+            $html = view('admin.message.chats', compact('message'))->render();
+            $res = array(
+                "success" => true,
+                "message" => "Message sent",
+                'html' => $html
+            );
+            echo json_encode($res);
+            return;
         }
         $exist_user = DB::table('numa_message_user')
                 ->select('id')
@@ -119,7 +135,6 @@ class MessageController extends Controller {
             );
         }
 
-        // print_r();
         $user_send_detail = DB::table('users')
                 ->select('name', 'email')
                 ->where('id', '=', $input['user_to'])
@@ -137,7 +152,22 @@ class MessageController extends Controller {
                 $message->to($user_send_detail[0]->email)->subject('Numa Health : Answer on your query.');
             });
         }
-        return redirect()->back()->withMessage('Message has been sent');
+        $message = DB::table('numa_message')
+                ->select('numa_message.*')
+                ->where('status', '=', 'Active')
+                ->where('user_id', '=', Auth::user()->id)
+                ->orWhere('user_to', '=', Auth::user()->id)
+                ->orderBy('numa_message.created_at', 'desc')
+                ->limit(10)
+                ->get();
+        $message = array_reverse($message);
+        $html = view('admin.message.chats', compact('message'))->render();
+        $res = array(
+            "success" => true,
+            "message" => "Message sent",
+            'html' => $html
+        );
+        echo json_encode($res);
     }
 
     public function postSlack() {

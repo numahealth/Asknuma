@@ -25,6 +25,8 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('admin/message/view/{id}', ['as' => 'message.view', 'uses' => 'Admin\MessageController@view']);
     Route::get('admin/message/reply/', ['as' => 'message.new_message', 'uses' => 'Admin\MessageController@view']);
     Route::post('admin/message/store/{id}', ['as' => 'message.store', 'uses' => 'Admin\MessageController@store']);
+    Route::post('admin/usermessage/store', ['as' => 'admin.usermessage.store', 'uses' => 'Admin\UserMessageController@store']);
+    Route::post('admin/message/store', ['as' => 'admin.message.store', 'uses' => 'Admin\MessageController@store']);
 
     Route::get('admin/message/store/', ['as' => 'message.store', 'uses' => 'Admin\MessageController@store']);
     Route::get('admin/setting/', ['uses' => 'Admin\SettingController@edit']);

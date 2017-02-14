@@ -221,144 +221,27 @@ $name = DB::table('users')
             <br clear="all">
         </div>
         <div class="chatboxcontent">
-
-            <?php foreach ($message as $value) { ?>
-                <div class="chatboxmessage <?php echo $value->user_id == 1 ? 'ltr' : ''; ?>">
-                    <span class="chatboxmessagefrom">
-                        <?php if ($value->user_id == 1) { ?> 
-                            <img style="width:50px;" src="{{ URL::asset("public")}}/quickadmin/images/asknuma.png" /> <?php
-                        } else {
-                            if (@$main_message->profile_pic != '') {
-                                $url = URL::asset('public/uploads/thumb') . '/' . @$main_message->profile_pic;
-                            } else {
-
-                                $url = URL::asset('public/quickadmin/images/user_profile.jpg');
-                            }
-                            ?> 
-                            <img style="width:50px;" src="<?php echo $url; ?>" /> 
-                        <?php } ?>
-                    </span>
-                    <div class="chatboxmessagecontent"><time datetime="2009-11-13T20:00"><?php
-                            if ($value->age !== 0) {
-                                echo 'Age : ' . $value->age . ' | ' . $value->gender . ' | ';
-                            }
-                            ?><? echo date('d M Y h:i:sA',strtotime($value->created_at)); ?> | @if($value->embedded != '')
-                            <a style="cursor:pointer" data-toggle="modal" data-target="#myModalv{{ $value->id }}"> Video attachment </a>
-                            @endif </time> </time> 
-                        @if($value->profile_pic != '')<img style="cursor:pointer" data-toggle="modal" data-target="#myModal{{ $value->id }}" src="{{ URL::asset('public/uploads/thumb') . '/'.  $value->profile_pic }}">
-                        <div class="chatbox_text">
-                            <p> 
-                                <?php echo $value->message; ?>
-                            </p>
-                        </div>
-                        @else
-                        <?php echo $value->message; ?>	
-                        @endif
-                        <div class="cl"></div>
-                    </div>
-                </div>
-                <div class="modal fade" id="myModal{{ $value->id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title" id="myModalLabel">Attachment</h4>
-                            </div>
-                            <div class="modal-body">
-                                @if($value->profile_pic != '')<img  style="width: 100%; cursor:pointer" src="{{ URL::asset('public/uploads') . '/'.  $value->profile_pic }}">
-                                @endif
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal fade" id="myModalv{{ $value->id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title" id="myModalLabel">Video Attachment</h4>
-                            </div>
-                            <div class="modal-body">
-                                <?php echo $value->embedded ?>
-
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal fade" id="myModal{{ $value->id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title" id="myModalLabel">Attachment</h4>
-                            </div>
-                            <div class="modal-body">
-                                @if($value->profile_pic != '')<img  style="width: 100%; cursor:pointer" src="{{ URL::asset('public/uploads') . '/'.  $value->profile_pic }}">
-                                @endif
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="modal fade" id="myModalv{{ $value->id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-                    <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                <h4 class="modal-title" id="myModalLabel">Video Attachment</h4>
-                            </div>
-                            <div class="modal-body">
-                                <?php echo $value->embedded ?>
-
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-success" data-dismiss="modal">Close</button>
-
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            <?php } ?>
-
+            @include('admin.usermessage.chats')
         </div>
-        {!! Form::open(array('method'=>'post','route' =>'admin.usermessage.store', 'id' => 'form-with-validation', 'class' => 'form-horizontal','files'=>'true')) !!}
+        {!! Form::open(array('method'=>'post','route' =>'admin.usermessage.store', 'id' => 'form-with-validation', 'class' => 'form-horizontal', 'files' => 'true', 'accept' => 'image/*')) !!}
         <div class="chatboxinput">
-
-            @if ($errors->any())
-            <div class="alert alert-danger">
-                <ul>
-                    {!! implode('', $errors->all('
-                    <li class="error">:message</li>
-                    ')) !!}
-                </ul>
-            </div>
-            @endif
-
-
+            <div class="alert alert-danger" style="display: none;"></div>
+            <div class="alert alert-info" style="display: none;"></div>
+            <input type="hidden" name="_token" value="{{ csrf_token()}}">
             <textarea name="message" id="message" class="chatboxtextarea form-control ckeditor" rows="5" placeholder=" Write your question, comment, or request here" ></textarea>
             {!! Form::hidden('user_to',1) !!}
             {!! Form::hidden('parent_id',0) !!}
+            <span class="filename">
+                <img style="display: none; float: left;" id="placeholder"/>
+            </span>
             <span class="upload"><b>Attach picture</b> &nbsp; <i class="fa fa-upload"></i>
-
-                {!! Form::file('profile_pic',array('id'=>'input-file', 'class'=>"chatboxtextareas form-control")) !!}
-                <span class="filename"></span></span> 
-            {!! Form::text('embedded', old('embedded'), array('class'=>' chatboxtextareas  form-control','placeholder'=>'Embedded video')) !!}
+                {!! Form::file('profile_pic', array('id'=>'input-file', 'class'=>"chatboxtextareas form-control")) !!}
+            </span> 
+            {!! Form::text('embedded', old('embedded'), array('class'=>' chatboxtextareas  form-control','placeholder'=>'Embedded video', 'id'=>'embedded')) !!}
             {!! Form::hidden('profile_pic_w', 4096) !!}
             {!! Form::hidden('profile_pic_h', 4096) !!}
-            <button type="submit" class="btn btn-default chat_submit">Submit</button>
+            <button id="sendMessageBtn" class="btn btn-default chat_submit">Send</button>
         </div>
-
         {!! Form::close() !!}
     </div>
 
@@ -400,7 +283,7 @@ $name = DB::table('users')
                         <a data-toggle="tab" href="#getting_started">Getting started</a>
                     </li>
                     <li role="presentation">
-                        <a data-toggle="tab" href="#numa_video">Numa video</a>
+                        <a data-toggle="tab" href="#numa_video">Welcome video</a>
                     </li>
                 </ul>
                 <div class="tab-content">

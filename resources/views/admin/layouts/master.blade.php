@@ -2,9 +2,7 @@
 @include('admin.partials.topbar')
 <div class="clearfix"></div>
 <div class="page-container">
-
     @include('admin.partials.sidebar')
-
     <div class="page-content-wrapper">
         <div class="page-content">
             <div class="white_bg_container">
@@ -22,24 +20,22 @@
                 <!--<div class="row">-->
                 <?php $methos_name = substr(Route::currentRouteAction(), (strpos(Route::currentRouteAction(), '@') + 1)); ?>
                 <div class="col-md-<?php
-                if ($methos_name == 'index' || $methos_name == 'getIndex' || $methos_name == 'show') {
-                    echo '12';
-                } else {
-                    echo "10 dummy";
-                }
-                ?> ">
-
+                    if ($methos_name == 'index' || $methos_name == 'getIndex' || $methos_name == 'show'
+                            || $methos_name == 'getView') {
+                         echo '12';
+                     } else {
+                         echo "10 dummy";
+                     }
+                     ?> "
+                     >
                     @if (Session::has('message'))
                     <div class="note note-info">
                         <p>{{ Session::get('message') }}</p>
                     </div>
                     @endif
-
                     @yield('content')
-
                 </div>
                 <!-- </div>-->
-
             </div>
         </div>
     </div>
