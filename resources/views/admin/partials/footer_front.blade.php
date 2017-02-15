@@ -47,7 +47,7 @@
                     <!-- +234.810.460.8748 -->
                     +234 812 917 2998
                 </li>
-                <li style="padding-top: 10px; font-size: 18px;">
+                <li style="padding-top: 10px; font-size: 13px;">
                     <!-- <span class="icon icon-seo-icons-17"></span> -->
                     <span><i class="fa fa-envelope-square"></i></span>
                     <!-- +234.810.460.8748 -->

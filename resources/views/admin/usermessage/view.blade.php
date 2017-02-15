@@ -155,20 +155,21 @@ $name = DB::table('users')
                     <div class="form-group">
                         <select class="form-control" id="reason">
                             <option value="">Please select...</option>
-                            <option value="I don't understand the platform">I don't understand the platform</option>
-                            <option value="I want to invest">I want to invest</option>
-                            <option value="I want to partner">I want to partner</option>
-                            <option value="Looking for employment">Looking for employment</option>
-                            <option value="The system didn't work like i expected">The system didn't work like i expected</option>
-                            <option value="I want to report a doctor">I want to report a doctor</option>
-                            <option value="Complaint of our customer support">Complaint of our customer support</option>
-                            <option value="Did not find what i came here for">Did not find what i came here for</option>
+                            <option value="I don't know how to use Numa">I don't know how to use Numa</option>
+                            <option value="Something is not working">Something is not working</option>
+                            <option value="I have a comment about the quality of service">
+                                I have a comment about the quality of service
+                            </option>
+                            <option value="I want to partner with Numa">
+                                I want to partner with Numa
+                            </option>
+                            <option value="Other">Other</option>
                         </select>
                     </div>
                 </div>
                 <div id="msg_panel" style="display: none;">
                     <h5 style="margin-top: 30px; margin-bottom: 5px; color: #000;">Tell us a little more...</h5>
-                    <textarea id="msg" class="form-control" rows="5" placeholder="Share your experience with us. What went well, what could we have done better?"></textarea>
+                    <textarea id="msg" class="form-control" rows="5" placeholder="Confidentially share your comments with us"></textarea>
                     <button class="btn btn-success" style="margin-top: 15px;" id="sendFeedbackBtn">
                         <span style="display: inline;" class="fa fa-send"></span> Send Feedback
                     </button> 

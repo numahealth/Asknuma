@@ -12,6 +12,7 @@ use App\Http\Controllers\Traits\FileUploadTrait;
 use Illuminate\Http\Request;
 use DB;
 use Auth;
+use Config;
 
 class UserMessageController extends Controller {
 
@@ -70,10 +71,12 @@ class UserMessageController extends Controller {
                     ['created_date' => date('Y-m-d H:i:s')]
             );
         }
+        $token = Config::get('slack_api.token');
+        $channel = Config::get('slack_api.channel');
         $ch = curl_init("https://slack.com/api/chat.postMessage");
         $data = http_build_query([
-            "token" => "xoxp-2274855213-71654124519-71891706131-548eb7ffb8",
-            "channel" => "#mvpmessages", //"#mychannel",
+            "token" => $token,
+            "channel" => $channel, //"#mychannel",
             "text" => $input['message'], //"Hello, Foo-Bar channel message.",
             "username" => Auth::user()->name
         ]);
@@ -81,15 +84,14 @@ class UserMessageController extends Controller {
         curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($ch, CURLOPT_FAILONERROR, true);
         $result = curl_exec($ch);
+        if (curl_error($ch)) {
+            error_log(curl_error($ch));
+        }
         $result = (json_decode($result));
         curl_close($ch);
-        /* if($result->ok)
-          {
-          return 1;
-          }else{
-          return 0;
-          } */
+
         DB::table('numa_message')->insert(
                 ['user_to' => $input['user_to'], 'message' => $input['message'], 'user_id' => $user_id, 'created_at' => date('Y-m-d H:i:s'), 'status' => 'Active',
                     'parent_id' => $input['parent_id'], 'profile_pic' => @$input['profile_pic'], 'embedded' => @$input['embedded']]

@@ -118,13 +118,14 @@
                         </span>
                     </li>
                     <li>
-                        Confidential consultations with highly trained healthcare professionals
+                        Confidential consultations with highly trained Numa healthcare professionals
                     </li>
                     <li>
                         48 hour response time
                     </li>
                     <li>
-                        Referrals to verified members of the Numa Global Healthcare Professional Network 
+                        Referrals to verified specialists and therapists in the Numa Global 
+                        Healthcare Professional Network 
                     </li>
                     <li>
                         Comprehensive video-health check-up with a doctor

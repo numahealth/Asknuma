@@ -158,11 +158,11 @@
                                         <input type="checkbox" id="t_and_c"/> 
                                         I accept 
                                         <a href="{{url('term_condition')}}" style="color: #75d575;">
-                                            Terms of service
+                                            Terms of Service
                                         </a>
                                         and 
                                         <a href="{{url('privacy_policy')}}" style="color: #75d575;">
-                                            Privacy policy
+                                            Privacy Policy
                                         </a>
                                     </label>
                                 </div>

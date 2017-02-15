@@ -238,7 +238,7 @@ use ThrottlesLogins;
             } else {
 
                 if (Auth::user()->subscribed == TRUE) {
-                    return redirect('admin/usermessage');
+                    return redirect('admin/setting');
                 } else {
                     return redirect('subscriptions');
                 }
@@ -278,7 +278,7 @@ use ThrottlesLogins;
             } else {
 
                 if (Auth::user()->subscribed == TRUE) {
-                    return redirect('admin/usermessage');
+                    return redirect('admin/setting');
                 } else {
                     return redirect('subscriptions');
                 }

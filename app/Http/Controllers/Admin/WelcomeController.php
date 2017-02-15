@@ -9,6 +9,7 @@ use Auth;
 use Mail;
 USE Session;
 use App\SubCatetory;
+use Config;
 
 class WelcomeController extends Controller {
 
@@ -56,10 +57,12 @@ class WelcomeController extends Controller {
         DB::table('numa_message')->insert(
                 ['diseases_article_id' => $_POST['article_id'], 'user_id' => $user_id, 'user_to' => 1, 'age' => $_POST['age'], 'message' => $_POST['comment'], 'gender' => $_POST['gender'], 'created_at' => date('Y-m-d H:i:s')]
         );
+        $token = Config::get('slack_api.token');
+        $channel = Config::get('slack_api.channel');
         $ch = curl_init("https://slack.com/api/chat.postMessage");
         $data = http_build_query([
-            "token" => "xoxp-2274855213-71654124519-71891706131-548eb7ffb8",
-            "channel" => "#mvpmessages", //"#mychannel",
+            "token" => $token,
+            "channel" => $channel, //"#mychannel",
             "text" => $_POST['comment'], //"Hello, Foo-Bar channel message.",
             "username" => Auth::user()->name
         ]);

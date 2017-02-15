@@ -46,6 +46,7 @@
                     <p><?php echo $selectedFeedback[0]->feedback_message; ?></p>
                     <footer><?php echo $selectedFeedback[0]->created_at; ?></footer>
                 </blockquote>
+                <h3 style="padding-left: 25px;"><?php echo 'Satisfaction Level: ' . $selectedFeedback[0]->satisfaction_level . '/10'; ?></h3>
             </div>
         <?php } else { ?>
         <div style="margin-top: 100px; text-align: center;">

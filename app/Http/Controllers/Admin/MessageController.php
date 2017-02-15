@@ -9,6 +9,7 @@ use App\Http\Requests\CreateMessageRequest;
 use Auth;
 use Mail;
 use App\Http\Controllers\Traits\FileUploadTrait;
+use Config;
 
 class MessageController extends Controller {
 
@@ -180,12 +181,14 @@ class MessageController extends Controller {
         if (in_array($_SERVER['REMOTE_ADDR'], $blackList)) {
             return;
         }
-
+        
+        $token = Config::get('slack_api.token');
+        $channel = Config::get('slack_api.channel');
         $ch = curl_init("https://slack.com/api/chat.postMessage");
         $data = http_build_query([
-            "token" => "xoxp-53548687746-53542895381-68049938758-1dc58b0fb4",
-            "channel" => "#general", //"#mychannel",
-            "text" => $_POST['message'], //"Hello, Foo-Bar channel message.",
+            "token" => $token,
+            "channel" => $channel, 
+            "text" => $_POST['message'], 
             "username" => 'Tobi'
         ]);
         curl_setopt($ch, CURLOPT_CUSTOMREQUEST, 'POST');

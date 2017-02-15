@@ -13,8 +13,11 @@
                 <td>
                     <table width="100%" border="0" cellspacing="5" cellpadding="0" bgcolor="#fff">
                         <tr>
-                            <td><a href="{{ url('') }}">
-                                    <img src="https://asknuma.com/asknuma/public/front/img/Numa_logo.png" alt="Catex Home Care"></a></td>
+                            <td>
+                                <a href="{{ url('') }}">
+                                    <img src="{{ url('') }}/public/front/img/Numa_logo.png" alt="Numa Health">
+                                </a>
+                            </td>
                         </tr>
                         <tr>
                             <td height="5"></td>
