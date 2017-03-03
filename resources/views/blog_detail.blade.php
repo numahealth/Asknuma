@@ -19,12 +19,39 @@ if (empty($detail)) {
             @if($detail[0]->blog_image!= '')
             <img width="100%"src="{{ URL::asset('public/uploads') . '/'.  $detail[0]->blog_image }}">
             @else
-            <img width="100%"src="{{ URL::asset('public/front/img') }}/article.jpg">
+            <img width="100%"src="{{ URL::asset('public/front/img/article.jpg') }}">
             @endif
         </div>
         <?php
-        echo $detail[0]->description;
+            echo $detail[0]->description;
         ?>
+
+        <div style="text-align: right; margin-top: 20px;">
+            <div>
+                <span style="font-size: 20px; color: #333; 
+                      padding: 15px; font-weight: bold;">
+                    Share this post
+                </span>
+            </div>
+            <a class="btn" target="_blank" 
+               href="http://www.facebook.com/sharer.php?s=100&amp;p[title]=<?php echo urlencode($detail[0]->blog_name); ?>&amp;p[summary]=<?php echo urlencode(strip_tags($detail[0]->description)) ?>&amp;p[url]=<?php echo urlencode(url('/blog') . '/' . $detail[0]->id . '/' . str_replace(' ', '-',strtolower($detail[0]->blog_name))); ?>&amp;p[images][0]=<?php echo $detail[0]->blog_image != NULL ? URL::asset('public/uploads' . '/' . $detail[0]->blog_image) : URL::asset('public/front/img/article.jpg'); ?>">
+                <img src="{{URL::asset('public/images')}}/square-facebook-128.png" alt="facebook" width="30px;" 
+                     height="30px;"/>
+            </a>
+            <a class="btn" target="_blank" 
+               href="https://twitter.com/home?status=<?php echo urlencode($detail[0]->blog_name . ' @ ' . url('/blog') . '/' . $detail[0]->id . '/' . str_replace(' ', '-',strtolower($detail[0]->blog_name))); ?>">
+                <img src="{{URL::asset('public/images')}}/twitter_icon.gif" alt="twitter" width="30px;" height="30px;"/>
+            </a>
+            <a class="btn" target="_blank" 
+               href="https://plus.google.com/share?url=<?php echo urlencode(url('/blog') . '/' . $detail[0]->id . '/' . str_replace(' ', '-',strtolower($detail[0]->blog_name))); ?>">
+                <img src="{{URL::asset('public/images')}}/googleplus.png" alt="googleplus" width="30px;" height="30px;"/>
+            </a>
+            <a class="btn" target="_blank" 
+               href="http://www.linkedin.com/shareArticle?mini=true&url=<?php echo urlencode(url('/blog') . '/' . $detail[0]->id . '/' . str_replace(' ', '-',strtolower($detail[0]->blog_name))); ?>">
+                <img src="{{URL::asset('public/images')}}/linkedin.png" alt="linkedin" width="30px;" height="30px;"/>
+            </a>
+        </div>
+
         @if($detail[0]->blog_video!= '')
         <div class="article_detail_video">
             <?php echo $detail[0]->blog_video; ?>	
@@ -148,12 +175,12 @@ if (empty($detail)) {
                         <a style="cursor:pointer" <?php if (Auth::check()) { ?> onclick ='bookmark_blog({{$detail[0]->id}}, "Active");' <?php } else { ?> data-toggle="modal" data-target="#myModal" <?php } ?>class="btn save_bookmark" >Save this article for later</a>
                     <?php } else { ?>
                         <a style="cursor:pointer" <?php if (Auth::check()) { ?> onclick ='bookmark_blog({{$detail[0]->id}}, "Inactive");' <?php } else { ?> data-toggle="modal" data-target="#myModal" <?php } ?>class="btn delete_bookmark" >Delete Bookmark</a>	
-                    <?php
+                        <?php
                     }
                 } else {
                     ?>
                     <a style="cursor:pointer" <?php if (Auth::check()) { ?> onclick ='bookmark_blog({{$detail[0]->id}});' <?php } else { ?> data-toggle="modal" data-target="#myModal" <?php } ?>class="btn save_bookmark" >Save this article for later</a>
-<?php } ?>
+                <?php } ?>
 
             </div>
 
@@ -313,4 +340,17 @@ if (empty($detail)) {
         </div>
     </div>
 </div>
+@endsection
+@section('title')
+<?php
+echo $detail[0]->blog_name
+?>
+@endsection
+@section('page_meta')
+<meta property="fb:admins" content="" />
+<meta property="fb:app_id" content="1662987603995534" />
+<meta property="fb:image" content="<?php echo $detail[0]->blog_image != null ? URL::asset('public/uploads/' . $detail[0]->blog_image) : URL::asset('public/front/img/article.jpg'); ?>"/>
+<meta property="og:url" content="<?php echo urlencode(url('/blog') . '/' . $detail[0]->id . '/' . str_replace(' ', '-',strtolower($detail[0]->blog_name))); ?>" />
+<meta property="og:title" content="<?php echo $detail[0]->blog_name; ?>" />
+<meta property="og:description" content="<?php echo strip_tags($detail[0]->description); ?>" />
 @endsection

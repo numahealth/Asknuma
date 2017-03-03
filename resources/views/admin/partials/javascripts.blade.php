@@ -230,5 +230,57 @@
             reader.readAsDataURL(input.files[0]);
         }
     }
+    
+     $('#addChatFlowBtn').click(function (e) {
+        e.preventDefault();
+        var flowName = $('#flowName').val();
+        if (!flowName || flowName.trim() === '') {
+            $('.notice_bar').text('Please enter flow name');
+            $('.notice_bar').fadeIn();
+            return;
+        }
+        
+        var flowDesc = $('#flowDesc').val();
+        if (!flowDesc || flowDesc.trim() === '') {
+            flowDesc = "";
+        }
+        
+        $('.notice_bar').text('');
+        $('.notice_bar').fadeOut();
+
+        $("#addChatFlowBtn").html('<img src="<?php echo url('public/front/img/6.gif') ?>"\n\
+                 style="width: 20px; height: 20px; display: inline;"/> \n\
+                <span style="display: inline; text-transform: none; margin-bottom: 50px;">Please wait...</span>');
+
+        $('.panel-body').css('opacity', 0.5);
+
+        $.ajax({
+            url: "<?php echo url('admin/bot/saveChatFlow') ?>",
+            method: 'POST',
+            data: {
+                _token: '<?php echo csrf_token(); ?>',
+                flowName: flowName.trim(),
+                flowDesc: flowDesc.trim()
+            },
+            success: function (result) {
+                $("#addChatFlowBtn").html('<span style="display: inline;" class="fa fa-save"></span> Save');
+                $('.panel-body').css('opacity', 1);
+                response = JSON.parse(result);
+                
+                $('#flowName').val('');
+                $('#flowDesc').val('');
+                $('#newCategoryDlg').modal('hide');
+                $('#flowTableBody').fadeOut();
+                $('#flowTableBody').html(response.html);
+                $('#flowTableBody').fadeIn();
+                // update ChatFlow table here
+                $(".notice_bar").text(response.message);
+                $(".notice_bar").fadeIn();
+            }
+        });
+
+    });
+
+    
 
 </script>

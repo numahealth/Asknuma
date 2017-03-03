@@ -56,7 +56,7 @@
                 ['location' => $location, 'login_status' => $login_status,
                     'status' => 'Active', 'user_id' => $user_id,
                     'ip_address' => $_SERVER['REMOTE_ADDR'],
-                    'seach_keyword' => $key,
+                    'seach_keyword' => $key == NULL ? "unknown" : $key,
                     'created_date' => date('Y-m-d H:i:s')]
         );
         echo '<h1>Your symptoms point towards <strong>"' . $key . '"</strong></h1>';

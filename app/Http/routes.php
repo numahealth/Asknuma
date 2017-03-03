@@ -11,7 +11,7 @@
   |
  */
 
-Route::group(['middleware' => 'auth'], function () {
+Route::group(['middleware' => 'auth'], function () { 
     Route::get('admin/symptom/bulk_upload', ['as' => 'symptom.bulk_upload', 'uses' => 'Admin\SymptomController@bulk_upload']);
     Route::get('/reset/{id}', ['as' => 'users.update_password', 'uses' => 'UsersController@update_password']);
     Route::get('users/view/{id}', ['as' => 'users.view', 'uses' => 'UsersController@views']);
@@ -41,12 +41,16 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('admin/history/audit_excel_download/', ['as' => 'test.audit_excel_download', 'uses' => 'Admin\HistoryController@getaudit_excel_download']);
     Route::get('admin/feedback/excel_download/', ['as' => 'feedback.excel_download', 'uses' => 'Admin\FeedbackController@getexcel_download']);
     Route::get('admin/feedbacks/', ['as' => 'admin.feedbacks.index', 'uses' => 'Admin\FeedbacksController@index']);
+    Route::get('admin/bot/', ['as' => 'admin.bot.index', 'uses' => 'Admin\BotConfigController@index']);
+    Route::get('admin/bot/boxes', ['as' => 'admin.bot.boxes', 'uses' => 'Admin\BotConfigController@boxes']);
+    Route::post('admin/bot/saveChatFlow', ['as' => 'admin.bot.saveChatFlow', 'uses' => 'Admin\BotConfigController@saveChatFlow']);
     Route::get('admin/faq/{id}', ['as' => 'admin.faq.edit', 'uses' => 'Admin\FaqController@edit']);
     Route::post('admin/welcome/message_deny', ['as' => 'welcome.message_deny', 'uses' => 'Admin\WelcomeController@postMessage_deny']);
     Route::post('admin/welcome/sub_cat', ['as' => 'welcome.sub_cat', 'uses' => 'Admin\WelcomeController@postSub_cat']);
     Route::post('admin/welcome/unread', ['as' => 'welcome.unread', 'uses' => 'Admin\WelcomeController@unread']);
     Route::post('admin/welcome/unread_update', ['as' => 'welcome.unread_update', 'uses' => 'Admin\WelcomeController@unread_update']);
 });
+
 Route::post('admin/welcome/search', ['as' => 'welcome.search', 'uses' => 'Admin\WelcomeController@postSearch']);
 Route::post('admin/welcome/yes_no', ['as' => 'welcome.yes_no', 'uses' => 'Admin\WelcomeController@postYes_no']);
 Route::post('admin/welcome/question', ['as' => 'welcome.question', 'uses' => 'Admin\WelcomeController@postQuestion']);
@@ -58,6 +62,18 @@ Route::post('admin/faqCategory/category', ['as' => 'faqCategory.category', 'uses
 Route::post('/signin', ['as' => 'auth.signin', 'uses' => 'Auth\AuthController@postSignin']);
 Route::post('/signup', ['as' => 'auth.signup', 'uses' => 'Auth\AuthController@sign_register']);
 Route::post('/forget', ['as' => 'auth.forget', 'uses' => 'Auth\AuthController@postForget']);
+Route::post('/loginWithFacebook', ['as' => 'bot.facebook.login', 'uses' => 'Auth\AuthController@loginWithFacebook']);
+
+Route::post('/facebook_bot', ['as' => 'bot.facebook', 'uses' => 'Bots\FacebookBotController@index']);
+Route::get('/facebook_bot', ['as' => 'bot.facebook', 'uses' => 'Bots\FacebookBotController@index']);
+Route::get('/whitelist', ['as' => 'bot.facebook.white', 'uses' => 'Bots\FacebookBotController@whiteListDomain']);
+Route::get('/getstarted', ['as' => 'bot.facebook.getStarted', 'uses' => 'Bots\FacebookBotController@getStartedButtonSetup']);
+Route::get('/persistentMenu', ['as' => 'bot.facebook.persistentMenu', 'uses' => 'Bots\FacebookBotController@setupPersistentMenu']);
+
+Route::get('/facebook_login', function () {
+    return view('facebook_login');
+});
+
 Route::get('/forget', function () {
     return view('forget');
 });
@@ -115,6 +131,7 @@ Route::get('/term_condition', function () {
 Route::get('/map', function () {
     return view('map');
 });
+
 //Route::get('/', 'Auth\AuthController@getLogin');
 /*  Route::get('form', function(){
   return view('student.form');
@@ -125,9 +142,11 @@ Route::get('laravel-version', function() {
     $laravel = app();
     return "Your Laravel version is " . $laravel::VERSION;
 });
+
 Route::get('/blog/{id}/{any}', function () {
     return view('blog_detail');
 });
+
 Route::get('/blog_details_small/{id}', function () {
     return view('blog_detail_short');
 });

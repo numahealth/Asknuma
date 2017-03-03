@@ -88,13 +88,13 @@
                 <!-- .fancy-heading start -->
 
                 <h2 class="simple-heading center" style="color: #53b553;">Health Advice from our Experts</h2>
-                <p> Meet Mixed, modern, multipurpose, professional and 
+<!--                <p> Meet Mixed, modern, multipurpose, professional and 
                     pixel perfect HTML template. Mixed offers unlimited design 
                     options to create almost any type of website, from 
                     professional business agency, creative portfolio, personal 
                     portfolio, landing page and so much more. It's 
                     easy to customize, followed up with detailed documentation. You'll have 
-                    your site up and running in no time. </p>
+                    your site up and running in no time. </p>-->  
             </div>
             <!-- .col-md-12 end --> 
         </div>

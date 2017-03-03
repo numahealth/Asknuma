@@ -86,7 +86,13 @@ class WelcomeController extends Controller {
                 ->get();
         if (empty($exist_user)) {
             DB::table('numa_bookmark')->insert(
-                    ['type' => $_POST['type'], 'user_id' => $user_id, 'diseases_article_id' => $_POST['article_id'], 'status' => $_POST['status'], 'created_date' => date('Y-m-d H:i:s'), 'updated_date' => date('Y-m-d H:i:s')]
+                    ['type' => $_POST['type'],
+                        'user_id' => $user_id,
+                        'diseases_article_id' => $_POST['article_id'],
+                        'status' => $_POST['status'],
+                        'created_date' => date('Y-m-d H:i:s'),
+                        'updated_date' => date('Y-m-d H:i:s')
+                    ]
             );
         } else {
             DB::table('numa_bookmark')

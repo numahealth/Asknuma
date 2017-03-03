@@ -12,6 +12,7 @@ use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 use Illuminate\Http\Request;
 use Auth;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Mail\Mailer;
 use Twilio;
 use Mail;
@@ -326,6 +327,27 @@ use ThrottlesLogins;
 
         $user->update($input);
         return redirect('forget')->withMessage('Email sent.');
+    }
+
+    public function loginWithFacebook() {
+
+//        $values = array();
+//        $symptom = DB::table('country_code')->get();
+//        if (!empty($symptom)) {
+//            foreach ($symptom as $records) {
+//                $values[$records->phonecode] = $records->nicename . ' +' . $records->phonecode;
+//            }
+//        }
+
+        $id = $_POST['id'];
+        $email = $_POST['email'];
+        $firstName = $_POST['first_name'];
+        $lastName = $_POST['last_name'];
+        $age = $_POST['age'];
+        $country = $_POST['country'];
+        $raw = json_encode($_POST['raw']);
+
+        Log::info($raw->first_name);
     }
 
 }

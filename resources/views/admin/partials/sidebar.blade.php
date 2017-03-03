@@ -73,6 +73,12 @@
                     <span class="title">Audit Log</span>
                 </a>
             </li>
+            <li @if(Request::path() == config('quickadmin.route').'/actions') class="active" @endif>
+                 <a href="{{ url(config('quickadmin.route').'/bot') }}">
+                    <i class="fa fa-users"></i>
+                    <span class="title">Bot Home</span>
+                </a>
+            </li>
             <li>
                 <a href="{{ url('logout') }}">
                     <i class="fa fa-sign-out fa-fw"></i>

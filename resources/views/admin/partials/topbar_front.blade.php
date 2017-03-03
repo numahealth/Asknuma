@@ -71,6 +71,7 @@
         </div>
     </div>
 </div>
+
 <div class="modal fade" id="myModal2" role="dialog">
     <div class="modal-dialog col-md-4" style="box-shadow:0px 2px 16px 0px #000;">   
         <!-- Modal content-->   
@@ -176,9 +177,7 @@
                                 Submit 
                             </button>
                         </div>
-
                         {!! Form::close() !!}
-
                 </div>
             </div>
         </div>
