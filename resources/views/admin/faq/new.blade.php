@@ -28,6 +28,31 @@
                     <span style="display: inline;" class="fa fa-save"></span> Save
                 </button> 
             </div>
+            <div class="panel-body" style="height: 300px;  overflow-y: auto;">
+                <table class="table table-striped table-hover table-responsive"
+                       id="cat_table">
+                    <thead>
+                        <tr>
+                            <th class="no-sort">Category</th>
+                            <th>
+                                <span class="fa fa-cog"></span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($categories as $cat) { ?>
+                            <tr>
+                                <td><?php echo $cat->category_name; ?></td>
+                                <td>
+                                    <button onclick="deleteCategory(<?php echo $cat->id; ?>)" class="btn btn-danger" type="button">
+                                        <span class="fa fa-trash"></span>
+                                    </button>
+                                </td>
+                            </tr>
+                        <?php } ?>
+                    </tbody>
+                </table>
+            </div>
 
         </div>
     </div>

@@ -11,7 +11,7 @@
   |
  */
 
-Route::group(['middleware' => 'auth'], function () { 
+Route::group(['middleware' => 'auth'], function () {
     Route::get('admin/symptom/bulk_upload', ['as' => 'symptom.bulk_upload', 'uses' => 'Admin\SymptomController@bulk_upload']);
     Route::get('/reset/{id}', ['as' => 'users.update_password', 'uses' => 'UsersController@update_password']);
     Route::get('users/view/{id}', ['as' => 'users.view', 'uses' => 'UsersController@views']);
@@ -29,7 +29,10 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('admin/message/store', ['as' => 'admin.message.store', 'uses' => 'Admin\MessageController@store']);
 
     Route::get('admin/message/store/', ['as' => 'message.store', 'uses' => 'Admin\MessageController@store']);
-    Route::get('admin/setting/', ['uses' => 'Admin\SettingController@edit']);
+    Route::get('admin/setting/', ['uses' => 'Admin\SettingController@view']);
+    Route::get('admin/setting/view', ['uses' => 'Admin\SettingController@view']);
+    Route::post('admin/setting/removeAccount', ['as' => 'admin.userssetting.removeAccount', 'uses' => 'Admin\SettingController@removeAccount']);
+    Route::get('admin/setting/edit', ['as' => 'admin.userssetting.edit', 'uses' => 'Admin\SettingController@edit']);
     Route::get('admin/feedbacks/view_reply/{id}', ['as' => 'admin.feedbacks.show', 'uses' => 'Admin\FeedbacksController@show']);
     Route::get('admin/reset_password/', ['uses' => 'Admin\SettingController@reset_password']);
     Route::post('admin/feedbacks/response', ['as' => 'admin.feedbacks.response', 'uses' => 'Admin\FeedbacksController@saveResponse']);
@@ -59,6 +62,7 @@ Route::post('admin/welcome/newsletter', ['as' => 'welcome.newsletter', 'uses' =>
 Route::post('admin/welcome/feedback', ['as' => 'welcome.feedback', 'uses' => 'Admin\WelcomeController@postFeedback']);
 Route::post('admin/welcome/subscribe', ['as' => 'welcome.subscribe', 'uses' => 'Admin\WelcomeController@postSubscription']);
 Route::post('admin/faqCategory/category', ['as' => 'faqCategory.category', 'uses' => 'Admin\FaqCategoryController@postCategory']);
+Route::post('admin/faqCategory/deleteCategory', ['as' => 'faqCategory.delete', 'uses' => 'Admin\FaqCategoryController@deleteCategory']);
 Route::post('/signin', ['as' => 'auth.signin', 'uses' => 'Auth\AuthController@postSignin']);
 Route::post('/signup', ['as' => 'auth.signup', 'uses' => 'Auth\AuthController@sign_register']);
 Route::post('/forget', ['as' => 'auth.forget', 'uses' => 'Auth\AuthController@postForget']);

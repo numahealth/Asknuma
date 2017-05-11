@@ -35,7 +35,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     protected $fillable = ['phone_code', 'dob', 'name', 'active_medications', 'medical_history',
         'email', 'password', 'role_id', 'phone', 'notes', 'profile_pic',
         'updated_by', 'age', 'gender', 'status'];
-    public static $status = ["Active" => "Active", "Inactive" => "Inactive"];
+    public static $status = ["Active" => "Active", "Inactive" => "Inactive", "Deleted" => "Deleted"];
     public static $gender = ["Male" => "Male", "Female" => "Female", "Other" => "Other"];
 
     /**

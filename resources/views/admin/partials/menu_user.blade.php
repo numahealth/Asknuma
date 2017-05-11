@@ -42,7 +42,7 @@
         @endif
         @endforeach
         <li><a href="{{ url('') }}"><i class="icon  fa fa-search"></i> New Search </a></li>
-        <li><a href="{{ url('admin/bookmark') }}"><i class="icon  fa  fa-save"></i> Saved Items </a></li>
+        <li><a href="{{ url('admin/bookmark') }}"><i class="icon  fa  fa-save"></i> Personal Health Library </a></li>
 
         <li><a href="{{ url('admin/setting') }}"><i class="icon  fa fa-user"></i> My Profile  </a></li>
         <li><a href="{{ url('admin/reset_password') }}"><i class="icon  fa fa-user"></i> Change password  </a></li>

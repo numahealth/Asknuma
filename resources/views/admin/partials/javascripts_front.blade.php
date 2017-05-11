@@ -160,7 +160,6 @@ $(document).ready(function () {
 
     });
 
-
     // makes sure the whole site is loaded
     jQuery(window).load(function () {
         // will first fade out the loading animation
@@ -187,8 +186,7 @@ $(document).ready(function () {
 </script>
 @endif 
 <script>
-    function form_submit()
-    {
+    function form_submit(){
         var field_value = document.getElementById("dieases").value;
         var typed_text = document.getElementById("typed_text").value;
         if (field_value === '' && (typed_text === '' || typed_text === 'typed_text')) {
@@ -198,8 +196,7 @@ $(document).ready(function () {
         document.getElementById("form_sumit").submit();
     }
 
-    function show_register()
-    {
+    function show_register(){
         $('#myModal').modal('hide');
         $("#register_anchor").trigger('click');
     }

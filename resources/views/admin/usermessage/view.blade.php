@@ -332,5 +332,10 @@ $name = DB::table('users')
 </style>
 <script src="<?php url('public/user/assets/plugins/ckeditor/ckeditor.js'); ?>"></script>			
 @endsection
-
+@section('page_title')
+<span>Ask a Numa Doctor</span>
+@endsection
+@section('page_subtitle')
+<span>Enter a message below and talk securely and confidentially with one of our Doctors. Please enter as much information as possible.</span>
+@endsection
 

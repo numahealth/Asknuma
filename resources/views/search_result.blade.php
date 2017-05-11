@@ -182,10 +182,11 @@
                         ->where('diseases_id', $groups->dieases)
                         ->orderBy('created_at', 'desc')
                         ->take(4)
-                        ->get();
+                        ->get(); //#d6f5d6
                 ?>
-                <div class="symptom_wrap" style="font-size: 16px; margin-bottom: 10px; text-transform: uppercase;">
-                    <?php echo $groups->name; ?>
+                <div class="symptom_wrap" style="font-size: 16px; margin-bottom: 10px;
+                     background: #eafaea; border: none; border-radius: 5px; font-family: 'Aileron', Arial, sans-serif;">
+                    <?php echo ucwords($groups->name); ?>
                 </div>
                 @foreach ($article as $art1)
                 <div class="col-md-6" style="margin-bottom: -9px; padding-bottom: 9px;">

@@ -88,10 +88,16 @@
         var val = $("#reason").val();
         if (!val || val.trim() === '') {
             $("#msg_panel").fadeOut();
+            if ($('#disableAccountBtn').length) {
+                $("#disableAccountBtn").attr('disabled', true);
+            }
         } else {
             $("#msg_panel").fadeIn();
             $('.modal-scrollable')
                     .animate({scrollTop: $('.modal-scrollable').height() / 3}, 500);
+            if ($('#disableAccountBtn').length) {
+                $("#disableAccountBtn").attr('disabled', false);
+            }
         }
     });
 
@@ -212,8 +218,8 @@
                 setTimeout(function () {
                     $(".alert.alert-info").fadeOut();
                     $('#placeholder')
-                        .attr('src', '');
-                $('#placeholder').fadeOut();
+                            .attr('src', '');
+                    $('#placeholder').fadeOut();
                 }, 5000);
                 //$('.modal-scrollable').animate({scrollTop: 0}, 500);
 
@@ -221,6 +227,32 @@
         });
 
     });
+
+
+    $("#disableAccountBtn").click(function (e) {
+        e.preventDefault();
+        var message = $("#msg").val();
+        var delete_data = $("#delete_data").is(':checked') ? 'Yes' : 'No';
+        var reason = $('#reason').val();
+        $('#disableAccountBtn').prop('disabled', true);
+        $('#disableAccountBtn').css('opacity', '0.4');
+
+        $.ajax({
+            url: "<?php echo url('admin/setting/removeAccount') ?>",
+            method: 'POST',
+            data: {
+                _token: '<?php echo csrf_token(); ?>',
+                message: message,
+                delete_data: delete_data,
+                reason: reason
+            },
+            success: function (result) {
+                window.location.href = '<?php echo url('/') ?>' + '?data=' + result;
+            }
+        });
+    });
+
+
 
     $('input[type=file]').on('change', readURL);
 
@@ -249,5 +281,42 @@
             reader.readAsDataURL(input.files[0]);
         }
     }
+
+    $(document).ajaxStart(function () {
+        //$('.ajaxLoader').css('display', 'inline');
+        //$(':button').prop('disabled', true);
+        //$('body').css('opacity', '0.6');
+    });
+    $(document).ajaxComplete(function () {
+        //$('.ajaxLoader').css('display', 'none');
+        //$(':button').prop('disabled', false);
+        //$('body').css('opacity', '1');
+    });
+
+    $('#submit').click(function (event) {
+        $('#notice_panel').css('display', 'none');
+        var current_password = $.trim($('input[name=current_password]').val());
+        var new_password = $.trim($('input[name=password]').val());
+        var retyped_password = $.trim($('input[name=confirm_password]').val());
+        if (current_password.length < 1) {
+            $('#notice_panel').html('Please enter your current password!');
+            $('#notice_panel').css('display', 'block');
+            event.preventDefault();
+            return;
+        }
+        if (new_password.length < 6) {
+            $('#notice_panel').html('Password must be at least 6 characters');
+            $('#notice_panel').css('display', 'block');
+            event.preventDefault();
+            return;
+        }
+        if (new_password !== retyped_password) {
+            $('#notice_panel').html('Inconsistent password');
+            $('#notice_panel').css('display', 'block');
+            event.preventDefault();
+            return;
+        }
+        
+    });
 
 </script>

@@ -47,11 +47,8 @@
                                     style="margin-right: 15px;">
                                 {{ trans('quickadmin::auth.login-btnlogin') }}
                             </button>
-
-
                             <input type="checkbox" class=""
                                    name="remember">{{ trans('quickadmin::auth.login-remember_me') }}
-
                         </div>
 
                         <div class="login_submint">
@@ -63,8 +60,6 @@
                                 Forgot password
                             </a>
                         </div>
-
-
                     </form>
                 </div>
             </div>
@@ -80,7 +75,10 @@
                 <div class="panel-heading">
                     <div class="panel-title">Sign Up</div>
                 </div>
-                <div class="oops">Oops - you don’t seem to have a Numa account. Register below to speak to one our doctors and build your health profile</div>
+                <div class="oops">
+                    Oops - you don’t seem to have a Numa account. Register 
+                    below to speak to one our doctors and build your health profile
+                </div>
 
                 <div class="panel-body" >
                     <div class="alert alert-danger col-sm-12" id="login-alert" style="display:none"></div>
@@ -105,10 +103,7 @@
                     @endif
                     <form class="form-horizontal" role="form" method="POST" 
                           action="{{ url('/register') }}" id='validation_form'>
-                        <input type="hidden"
-                               name="_token"
-                               value="{{ csrf_token() }}"> 
-
+                        <input type="hidden" name="_token" value="{{ csrf_token() }}"> 
                         <div class="input-group" > <span class="input-group-addon"><i class="fa fa-user"></i></span>
                             {!! Form::text('first_name', old('first_name'), ['class'=>'form-control', 'placeholder'=> 'First Name*']) !!}
                         </div>
@@ -183,6 +178,7 @@
         </div>
     </div>
 </div>
+
 <div id="header-wrapper"> 
     <!-- #header.header-type-1 start -->
     <header id="header" class="header-type-1 dark"> 
@@ -196,25 +192,6 @@
 
                 <!-- #social-links start -->
 
-                <!--ul id="social-links">
-                <?php if (\Auth::check()) { ?>
-                                                                                        @if(\Auth::user()->role_id==1)
-                                                                                                {{--*/ $href = url('users') /*--}}
-                                                                                                
-                                                                                        @else
-                                                                                                {{--*/ $href = url('admin/usermessage') /*--}}
-                                                                                        @endif
-                                                                                 <li> <i class="fa fa-user"></i> <a href="{{$href}}" >My Account </a> </li>
-                                                                                 @if(\Auth::user()->role_id==2)
-                                                                                                <li> <i class="fa fa-wechat"></i> <a href="{{$href}}" id="mesg" >Message(0) </a> </li>
-                                                                                                
-                                                                                        @endif
-                                                                                 
-                <?php } else { ?>
-                                                                          <li> <i class="fa fa-lock"></i> <a id="login_anchor" href="javascript:void(0)"  data-toggle="modal" data-target="#myModal">Login </a> </li>
-                                                                          <li> <i class="fa fa-user"></i> <a id="register_anchor" href="javascript:void(0)"  data-toggle="modal" data-target="#myModal2">Sign Up</a> </li>
-                <?php } ?>
-                </ul-->
                 <!-- #social-links end --> 
             </div>
             <!-- #top-bar end --> 
@@ -344,17 +321,6 @@
                                                 <li> <a id="register_anchor" href="{{url('/signup')}}"  data-toggle="modal" data-target="#myModal2">Sign Up</a> </li>
                                             <?php } ?>
 
-
-
-                                            <!-- Portfolio li end -->
-
-
-                                            <!-- Blog li end --> 
-
-                                            <!-- Elements li end -->
-
-
-                                            <!-- COntact li end -->
                                         </ul>
                                         <!-- .dl-menu end --> 
                                     </div>

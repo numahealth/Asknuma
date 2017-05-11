@@ -7,12 +7,8 @@ use Laraveldaily\Quickadmin\Observers\UserActionsObserver;
 
 
 
-
 class Blog extends Model {
-
-    
-
-    
+        
 
     protected $table    = 'blog';
     

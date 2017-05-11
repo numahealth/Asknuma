@@ -3,7 +3,7 @@
 <div id="preloader">
     <div id="status_ok">&nbsp;</div>
 </div>
-<div style=" width:100%; height:20px; background:red; display:none;"> </div>
+<div style=" width:100%; height:20px; background: red; display:none;"> </div>
 <div class="container-fluid numa_banner testing" >
     <div class="col-md-7 numa_main-search">
         <h1>Your personal health assistant in a mobile app</h1>
@@ -59,7 +59,6 @@
 
             <div class="col-md-12 home_about1"> 
                 <div class="col-md-4 col-sm-4 col-xs-12"> <img src="{{ URL::asset('public/front/img') . '/girl.png' }}"> 
-
                     <p> Your very own artificially intelligent health assistant</p>
                 </div>
 

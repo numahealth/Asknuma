@@ -140,6 +140,14 @@
                         .attr("value", result['id'])
                         .attr('selected', 'selected')
                         .text(result['name']));
+                var newRow = "<tr><td>" + result['name'] + "</td><td> " +
+                        '<button class="btn btn-danger" '
+                        + 'onclick="deleteCategory(' + result['id']
+                        + ') type="button"><span class="fa fa-trash"></span></button>'
+                        +
+                        "</td></tr>";
+                $('#cat_table tbody').append(newRow);
+
                 $('#categoryName').val('');
 
                 $(".notice_bar").text('Record saved successfully');
@@ -148,6 +156,28 @@
         });
 
     });
+
+    function deleteCategory(id) {
+        $('.panel-body').css('opacity', 0.8);
+        $.ajax({
+            url: "<?php echo url('admin/faqCategory/deleteCategory') ?>",
+            method: 'POST',
+            data: {
+                _token: '<?php echo csrf_token(); ?>',
+                id: id
+            },
+            success: function (result) {
+                $('.panel-body').css('opacity', 1);
+                result = JSON.parse(result);
+                if (result['status'] == 'error') {
+                    $(".notice_bar").removeClass('alert-warning');
+                    $(".notice_bar").addClass('alert-danger');
+                }
+                $(".notice_bar").text(result['msg']);
+                $(".notice_bar").fadeIn();
+            }
+        });
+    }
 
 
     $("#sendMessageBtn").click(function (e) {
@@ -230,8 +260,8 @@
             reader.readAsDataURL(input.files[0]);
         }
     }
-    
-     $('#addChatFlowBtn').click(function (e) {
+
+    $('#addChatFlowBtn').click(function (e) {
         e.preventDefault();
         var flowName = $('#flowName').val();
         if (!flowName || flowName.trim() === '') {
@@ -239,12 +269,12 @@
             $('.notice_bar').fadeIn();
             return;
         }
-        
+
         var flowDesc = $('#flowDesc').val();
         if (!flowDesc || flowDesc.trim() === '') {
             flowDesc = "";
         }
-        
+
         $('.notice_bar').text('');
         $('.notice_bar').fadeOut();
 
@@ -266,7 +296,7 @@
                 $("#addChatFlowBtn").html('<span style="display: inline;" class="fa fa-save"></span> Save');
                 $('.panel-body').css('opacity', 1);
                 response = JSON.parse(result);
-                
+
                 $('#flowName').val('');
                 $('#flowDesc').val('');
                 $('#newCategoryDlg').modal('hide');
@@ -281,6 +311,6 @@
 
     });
 
-    
+
 
 </script>

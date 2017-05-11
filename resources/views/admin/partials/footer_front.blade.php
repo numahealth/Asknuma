@@ -141,5 +141,6 @@
         $('#typed_text').val($('.selectize-input.items.has-options.not-full  input').val());
     });
 </script>
+</div> <!-- Container for the entire content on the page -->
 </body>
 </html>

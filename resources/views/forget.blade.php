@@ -1,7 +1,7 @@
 @include('admin.partials.header')
 <style>
 body { background:#fff;}
-.numa_banner {opacity:1 !important; margin-top: 0; background: url(https://www.asknuma.com/asknuma/public/front/img/banner01.jpg) no-repeat fixed center -25px / cover;height: 100vh; padding-top:10%;}
+.numa_banner {opacity:1 !important; margin-top: 0; background: url(https://www.asknuma.com/public/front/img/banner01.jpg) no-repeat fixed center -25px / cover;height: 100vh; padding-top:10%;}
 
 </style>
 

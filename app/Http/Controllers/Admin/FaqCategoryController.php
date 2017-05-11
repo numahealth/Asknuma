@@ -50,14 +50,24 @@ class FaqCategoryController extends Controller {
         echo json_encode($res);
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id) {
-        //
+    public function deleteCategory(Request $request) {
+        $input = $request->all();
+        $id = $input['id'];
+        $faqs = DB::table('faq')->where('category_id', '=', $id)->get();
+        if ($faqs != null) {
+            $res = array(
+                'status' => 'error',
+                'msg' => 'Category cannot be deleted as F.A.Q under it will become orphans!'
+            );
+            echo json_encode($res);
+            return;
+        }
+        \App\FaqCategory::destroy($id);
+        $res = array(
+            'status' => 'success',
+            'msg' => 'Category deleted successfully. Please refresh page to see the change!'
+        );
+        echo json_encode($res);
     }
 
     /**
@@ -81,12 +91,6 @@ class FaqCategoryController extends Controller {
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function destroy($id) {
         //
     }

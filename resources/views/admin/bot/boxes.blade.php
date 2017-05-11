@@ -2,7 +2,7 @@
 @section('content')
 <div>
     <div class="modal fade" id="newCategoryDlg" role="dialog" 
-         style="top: 10% !important; background-color: transparent !important;">
+         style="top: 10% !important; background-color: transparent !important; box-shadow: none;">
         <div class="modal-dialog">
             <div class="panel panel-info">
                 <div class="panel-heading" style="background-color: #75d575; color: #fff; border: 1px solid #fff;">

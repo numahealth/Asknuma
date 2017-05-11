@@ -18,7 +18,7 @@
 <div class="form-group">
     {!! Html::decode(Form::label('question','Question <span class="required">*</span>', ['class'=>'col-sm-2 control-label'])) !!}
     <div class="col-sm-10">
-        {!! Form::text('keyword', old('question',$faq->question), array('class'=>'form-control')) !!}
+        {!! Form::text('question', old('question',$faq->question), array('class'=>'form-control')) !!}
 
     </div>
 </div>

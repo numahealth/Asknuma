@@ -227,10 +227,27 @@ class WelcomeController extends Controller {
         if (Auth::user() == NULL) {
             echo url('/');
         } else {
+            $date_subscribed = date('Y-m-d H:i:s');
             $user = Auth::user();
             $user->subscribed = TRUE;
+            $user->date_subscribed = $date_subscribed;
             $user->save();
-            echo url('admin/usermessage');
+
+            // send mail only on production
+            $blackList = array(
+                'localhost',
+                '127.0.0.1',
+                '::1'
+            );
+            if (!in_array($_SERVER['REMOTE_ADDR'], $blackList)) {
+                Mail::send('admin.users.sub_confirm', ['user' =>
+                    array('name' => $user->name
+                        , 'date_subscribed' => $date_subscribed)], function ($message) {
+                    $message->from('info@numa.io', 'Numa Health');
+                    $message->to(Auth::user()->email)->subject('Numa Subscription Notification');
+                });
+            }
+            echo url('admin/setting');
         }
     }
 

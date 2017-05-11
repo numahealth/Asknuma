@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-        <title>Untitled Document</title>
+        <title>Welcome on board</title>
     </head>
 
     <body style="margin:0;">
@@ -41,10 +41,25 @@
                         </tr>
                         <tr>
                             <td>
-                                <p>We are a team of healthcare professionals and technology enthusiasts that are passionate about giving you more control of your healthcare and are building tools to help you do just that. Complete your health profile, ask our doctors your health questions and find health information relevant to you.
+                                <p>
+                                    We are a team of healthcare professionals and technology enthusiasts 
+                                    that are passionate about giving you more control of your healthcare 
+                                    and are building secure, rapid tools to help you do just that. 
+                                    Complete your health profile, ask our doctors your health questions
+                                    and find health information relevant to you.
                                 </p>			
-                                <p>As we grow and add more services to our platform, we would love to hear from you so if you have any questions, suggestions or would like to talk, do not hesitate to email me on tobi [at] numa [dot] io or get in touch with us via social media. we'll keep you up to date with developments at Numa.</p>
-                                <p>Your login details are below. Please change your password from your Profile page immediately.</p></td>
+                                <p>
+                                    As we grow and add more services to our platform, we would love to
+                                    hear from you so if you have any questions, suggestions or would 
+                                    like to talk, do not hesitate to email us on info@numa.io 
+                                    or get in touch with us via social media. We'll keep you up to date 
+                                    with developments at Numa.
+                                </p>
+                                <p>
+                                    Your login details are below. Please change your password from your 
+                                    Profile page immediately to something secure and memorable.
+                                </p>
+                            </td>
                         </tr>
                         <tr>
                             <td>&nbsp;</td>
@@ -67,9 +82,9 @@
                                             <a href="{{ url('') }}" style="text-decoration: none; font-size: 13px;">
                                                 <div style="height:100%;width: 314%;margin-top: 15px;color: #1294dc; text-decoration:none;">
                                                     Click here to login securely
-                                                </div></a>
-
-
+                                                </div>
+                                            </a>
+                                        </td>
                                     </tr>
                                 </table>
                             </td>
@@ -87,10 +102,10 @@
                             <td><strong> Best wishes,</strong></td>
                         </tr>
                         <tr>
-                            <td style="color: #666666;">Dr Tobi Obisanya</td> 
+                            <td style="color: #666666;">Dr Tobi Obisanya MBBS (AICSM) BSc  </td> 
                         </tr>
                         <tr>
-                            <td style="color: #666666;">Co Founder</td>
+                            <td style="color: #666666;">Medical Lead</td>
                         </tr>
                         <tr>
                             <td style="color:#666666;">Numa Health</td>
@@ -99,7 +114,17 @@
                             <td>&nbsp;</td>
                         </tr>
                         <tr>
-                            <td bgcolor="efefef"><p style="padding:0 10px;">Have any questions? For a quick reply, drop us an email on <a style="text-decoration:none;color:#2b4bff" href="#" >info@numa.io</a></p></td>
+                            <td bgcolor="efefef">
+                                <p style="padding:0 10px;">
+                                    Have any questions? For a quick reply, drop us an email on 
+                                    <a style="text-decoration:none;color:#2b4bff" href="#" >info@numa.io</a>
+                                </p>
+                                <p style="text-align: center;">
+                                    <span>
+                                        &copy; <?php echo date('Y');?> All Rights Reserved by Numa Health
+                                    </span>
+                                </p>
+                            </td>
                         </tr>
                     </table>
                 </td>

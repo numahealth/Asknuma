@@ -40,7 +40,7 @@ use ThrottlesLogins;
      *
      * @return void
      */
-    public function __construct() {
+    public function __construct() {  
         $this->redirectAfterLogout = config('quickadmin.homeRoute');
         $this->middleware('guest', ['except' => 'getLogout']);
     }
@@ -72,7 +72,8 @@ use ThrottlesLogins;
     protected function create(array $data) {
         $password = rand(150000, 150000000);
         $number = '+' . $data['phone_code'] . '' . $data['phone'];
-        $message = 'Hello ' . $data['first_name'] . ', your username is : ' . $data['email'] . '.  Password : ' . $password . '. Login and change it now at https://asknuma.com/asknuma';
+        $message = 'Hello ' . $data['first_name'] . ', your username is : ' . $data['email'] . '.  Password : ' . $password 
+                . '. Login and change it now at ' . url('/');
 
         $user = User::create([
                     'name' => $data['first_name'] . ' ' . $data['last_name'],
@@ -95,10 +96,11 @@ use ThrottlesLogins;
             try {
                 Twilio::message($number, $message);
                 Mail::send('admin.users.view', ['user_detail' =>
-                    array('name' => $data['first_name'], 'username' => $data['email'], 'password' => $password)], function ($message) use ($data) {
+                    array('name' => $data['first_name'], 'username' => $data['email'], 
+                        'password' => $password)], function ($message) use ($data) {
                     $message->from('info@numa.io', 'Numa Health');
 
-                    $message->to($data['email'])->subject('Welcome to your AskNuma account!');
+                    $message->to($data['email'])->subject('Welcome to your Numa account');
                 });
                 $apikey = '8954af9a4315019f1d0f8082f8925744-us9';
                 $auth = base64_encode('user:' . $apikey);
@@ -135,7 +137,6 @@ use ThrottlesLogins;
 
     public function sign_register(Request $request) {
         $validator = $this->validator($request->all());
-
         if ($validator->fails()) {
             return redirect('/signup')
                             ->withErrors($validator, 'signup')
@@ -144,18 +145,39 @@ use ThrottlesLogins;
         //$this->signup($request->all());
         Auth::guard($this->getGuard())->login($this->create($request->all()));
         if (Auth::user()->subscribed == TRUE) {
-            return redirect('admin/usermessage');
+            return redirect('admin/setting');
         } else {
             return redirect('subscriptions');
         }
-        // return redirect()->back()->withMessage('You’re awesome! Please check your email inbox in the next few minutes & follow the instructions to verify your account');
+        
     }
+    
+    public function postRegister(Request $request) {
+        $validator = $this->validator($request->all());
+        if ($validator->fails()) {
+            return redirect('/signup')
+                            ->withErrors($validator, 'signup')
+                            ->withInput();
+        }
+        $this->signup($request->all());
+        //Auth::guard($this->getGuard())->login($this->create($request->all()));
+//        if (Auth::user()->subscribed == TRUE) {
+//            return redirect('admin/setting');
+//        } else {
+//            return redirect('subscriptions');
+//        }
+        $request->session()->put('click', 1);
+        return redirect()->back()->withMessage('You’re awesome! Please check your email inbox in the next few minutes & follow the instructions to verify your account');
+    }
+    
 
     protected function signup(array $data) {
         $password = rand(150000, 150000000);
         $number = '+' . $data['phone_code'] . '' . $data['phone'];
-        $message = 'Hello ' . $data['first_name'] . ', your username is : ' . $data['email'] . '.  Password : ' . $password . '. Login and change it now at https://asknuma.com/asknuma';
-
+        $message = 'Hello ' . $data['first_name'] . ', your username is : ' . $data['email'] 
+                . '.  Password : ' . $password 
+                . '. Login and change it now at ' . url('/');
+        
         $user = User::create([
                     'name' => $data['first_name'] . ' ' . $data['last_name'],
                     'email' => $data['email'],
@@ -317,16 +339,19 @@ use ThrottlesLogins;
         $email = $user_d->email;
         $password = rand(150000, 15000000);
         $input['password'] = Hash::make($password);
-        Mail::send('admin.users.view_forget', ['user_detail' => array('name' => $user_d->name, 'username' => $user_d->email, 'password' => $password)], function ($message) use ($user_d) {
-            $message->from('anshul@unyscape.com', 'Asknuma : Forgot Password');
+        Mail::send('admin.users.view_forget', ['user_detail' => array('name' => $user_d->name, 
+            'username' => $user_d->email, 'password' => $password)], function ($message) use ($user_d) {
+            $message->from('info@numa.io', 'Numa Password Recovery');
 
-            $message->to($user_d->email)->subject('Asknuma :Forgot Password');
+            $message->to($user_d->email)->subject('Numa Password Reset Request');
         });
 
         $user = User::findOrFail($id);
 
         $user->update($input);
-        return redirect('forget')->withMessage('Email sent.');
+        return redirect('forget')->withMessage('Password reset link has been sent to your email.'
+                . ' Please check your Spam folder if it does not show up in your Inbox in 5 mins. '
+                . ' Thank you!');
     }
 
     public function loginWithFacebook() {
